@@ -22,7 +22,7 @@ if (!function_exists('admin_navigation_product')) {
 
             if(Auth::hasCap('product_setting')) {
                 AdminMenu::addSub('products', 'product_settings', 'Cài đặt', sicommerce::url('setting'), [
-                    'callback' => 'admin_page_product_settings',
+                    'callback' => 'Admin_Product_Setting::pageSetting',
                     'position' => $position_woocommerce_settings
                 ]);
             }

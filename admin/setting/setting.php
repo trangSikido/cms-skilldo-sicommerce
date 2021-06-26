@@ -9,7 +9,7 @@ Class Admin_Product_Setting {
     }
     public static function tabs() {
         $setting_tabs = [
-            'general' 	=> array( 'label' => 'Chung', 	 'callback' => 'Admin_Product_Setting::pageSetting', 'icon' => '<i class="fab fa-elementor"></i>'),
+            'general' 	=> array( 'label' => 'Chung', 	 'callback' => 'Admin_Product_Setting::pageSettingGeneral', 'icon' => '<i class="fab fa-elementor"></i>'),
             'product' 	=> array( 'label' => 'Sản phẩm', 'callback' => 'Admin_Product_Setting::pageSettingProduct', 'icon' => '<i class="fal fa-box-full"></i>'),
         ];
         return apply_filters('admin_product_settings_tabs', $setting_tabs);
