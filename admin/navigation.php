@@ -13,17 +13,17 @@ if (!function_exists('admin_navigation_product')) {
                 AdminMenu::addSub('products', 'products_categories', 'Danh mục', 'products/products_categories');
             }
 
-            $position_woocommerce_settings = 'products_categories';
+            $position_settings = 'products_categories';
 
             foreach (Taxonomy::getCategoryByPost('products') as $taxonomy_key => $taxonomy_value) {
-                $position_woocommerce_settings = $taxonomy_key;
+                $position_settings = $taxonomy_key;
                 AdminMenu::addSub('products', $taxonomy_key, $taxonomy_value->labels['name'],'post/post_categories?cate_type='.$taxonomy_key.'&post_type=products');
             }
 
             if(Auth::hasCap('product_setting')) {
                 AdminMenu::addSub('products', 'product_settings', 'Cài đặt', sicommerce::url('setting'), [
                     'callback' => 'Admin_Product_Setting::pageSetting',
-                    'position' => $position_woocommerce_settings
+                    'position' => $position_settings
                 ]);
             }
 
