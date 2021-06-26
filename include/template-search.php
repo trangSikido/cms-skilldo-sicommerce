@@ -1,63 +1,47 @@
 <?php
-/** PRODUCT-SEARCH ******************************************************************/
+Class Product_Page_Search {
+    static public function searchData($objects, $type, $keyword) {
 
-if ( ! function_exists( 'woocommerce_product_search' ) ) {
+        $ci =& get_instance();
 
-	function woocommerce_product_search( $objects, $type, $keyword ) {
+        if( $type == 'products' ) {
 
-		$ci =& get_instance();
+            $args = [
+                'where' 	 => ['public' => 1, 'trash' => 0],
+                'where_like' => ['title' => [$keyword]],
+            ];
 
-		if( $type == 'products' ) {
+            if(InputBuilder::get('category') != null && InputBuilder::get('category') != 0) {
 
-			$args = [
-				'where' 	 => ['public' => 1, 'trash' => 0],
-				'where_like' => ['title' => [$keyword]],
-			];
+                $category = Str::clear(InputBuilder::get('category'));
 
-			if(InputBuilder::get('category') != null && InputBuilder::get('category') != 0) {
+                $args['where_category'] = $category;
 
-				$category = removeHtmlTags(InputBuilder::get('category'));
+                $args['join'] = true;
+            }
 
-				$args['where_category'] = $category;
+            $args = apply_filters('product_search_args', $args);
 
-				$args['join'] = true;
-			}
+            $objects = apply_filters('product_search_data', Product::gets($args));
 
-			$args = apply_filters('woocommerce_product_search_args', $args);
+            $ci->template->set_layout('template-full-width');
+        }
 
-			$objects = Product::gets($args);
-
-			$ci->template->set_layout('template-full-width');
-		}
-
-		return $objects;
-		
-	}
-	add_filter( 'get_search_data','woocommerce_product_search', 3, 3 );
-}
-
-
-if ( ! function_exists( 'woocommerce_product_search_html' ) ) {
-
-	function woocommerce_product_search_html( $objects, $type, $keyword ) {
-
-		$ci =& get_instance();
-
-		if( $type == 'products' ) {
-
-			if(have_posts($objects)) {
-
-				if(is_object($objects)) {
-
-					$objects = array('objects' => array($objects) );
-				}
-				else {
-					$objects = array('objects' => $objects );
-				}
-			}
-
+        return $objects;
+    }
+    static public function searchHtml($objects, $type, $keyword) {
+        if( $type == 'products' ) {
+            if(have_posts($objects)) {
+                if(is_object($objects)) {
+                    $objects = array('objects' => array($objects) );
+                }
+                else {
+                    $objects = array('objects' => $objects );
+                }
+            }
             scmc_template( 'product_search', $objects );
-		}
-	}
-	add_action( 'get_search_view','woocommerce_product_search_html', 3, 3 );
+        }
+    }
 }
+add_filter('get_search_data','Product_Page_Search::searchData', 10, 3 );
+add_action('get_search_view','Product_Page_Search::searchHtml', 10, 3 );
