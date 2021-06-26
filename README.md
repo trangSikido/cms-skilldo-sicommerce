@@ -6,3 +6,5 @@ Download, change folder name to sicommerce and copy source code into /views/plug
 <li>Login cms</li>
 <li>Go to Admin -> Plugins -> search plugin sicommerce and click button activate</li>
 </ul>
+# Screenshots
+![image](https://user-images.githubusercontent.com/86478092/123520610-aaffba00-d6db-11eb-9d05-e949fd528307.png)
