@@ -15,6 +15,7 @@
                  * @hooked product_slider_vertical - 10 - Slider ảnh sản phẩm
                  */
                 do_action('product_detail_slider', $object );
+                do_action('product_detail_slider3', $object );
 			?>
 		</div>
 		<div class="col-md-6">
