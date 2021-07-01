@@ -104,10 +104,8 @@ if(!function_exists('get_controllers_product_index')) {
             if(have_posts($data_url)) $url .= '&'. http_build_query($data_url);
         }
         $args['where']          = $where;
-        $args 					= apply_filters( 'woocommerce_controllers_index_args', $args );
-        $args 					= apply_filters( 'controllers_product_index_args', $args );
-        $total_rows 			= apply_filters( 'woocommerce_controllers_index_count', Product::count( $args ));
-        $total_rows 			= apply_filters( 'controllers_product_index_count', $total_rows);
+        $args 					= apply_filters('controllers_product_index_args', $args);
+        $total_rows 			= apply_filters('controllers_product_index_count', Product::count($args));
 
         if( $total_rows > 0 ) {
             $config  = array (
@@ -117,7 +115,6 @@ if(!function_exists('get_controllers_product_index')) {
                 'url'           => $url,
             );
             $pagination = new paging($config);
-            $pagination = apply_filters( 'woocommerce_controllers_index_paging', $pagination);
             $pagination = apply_filters( 'controllers_product_index_paging', $pagination );
         }
         else $pagination = '';
@@ -146,11 +143,9 @@ if(!function_exists('get_controllers_product_index')) {
             $args['params'] = ['orderby' => $orderby];
         }
 
-        $args['params'] = apply_filters('woocommerce_controllers_index_params', $args['params']);
         $args['params'] = apply_filters('controllers_product_index_params', $args['params']);
 
-        $objects = apply_filters( 'woocommerce_controllers_index_objects', Product::gets($args),$args);
-        $objects = apply_filters( 'controllers_product_index_objects', $objects,$args);
+        $objects = apply_filters( 'controllers_product_index_objects', Product::gets($args),$args);
 
         $result = [];
         $result['pagination']   = $pagination;

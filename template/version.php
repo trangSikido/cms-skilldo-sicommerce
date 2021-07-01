@@ -1,8 +1,8 @@
 <?php
 /**
- * The infomation for template woocommerce cart 
+ * The infomation for template sicommerce cart
  *
  * @author 		SKD Developer Team 
- * @package 	WooCommerce/Templates
+ * @package 	SiCommerce/Templates
  * @version     2.1.0
  */

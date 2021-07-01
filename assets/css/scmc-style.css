@@ -21,7 +21,7 @@
   -webkit-animation: 1.25s cubic-bezier(0.26, 0.54, 0.32, 1) forwards ani-fadeIn;
   animation: 1.25s cubic-bezier(0.26, 0.54, 0.32, 1) forwards ani-fadeIn;
 }
-.product-slider-horizontal .woocommerce-pr-object {
+.product-slider-horizontal .product-item {
   transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s, color 0.3s, opacity 0.3s, -webkit-transform 0.3s;
 }
 /* product detail */
@@ -50,14 +50,14 @@
 .products-detail .price {
   margin-bottom: 10px!important;
 }
-.products-detail .wcmc-price-detail .price,
-.products-detail .wcmc-price-detail .price-sale {
+.products-detail .price-detail .price,
+.products-detail .price-detail .price-sale {
   display: inline-block;
 }
-.products-detail .wcmc-price-detail .price {
+.products-detail .price-detail .price {
   font-size: 28px!important;
 }
-.products-detail .wcmc-price-detail .price-sale {
+.products-detail .price-detail .price-sale {
   color: #999;
 }
 .products-detail .social-block img {

@@ -61,10 +61,6 @@ class sicommerce {
 
     public function uninstall() {
         scmc_database_drop_table();
-    	/**
-         * XÓA METADATA
-         */
-    	delete_all_metadata('woocommerce');
         /**
          * XÓA OPTION CẤU HÌNH
          */

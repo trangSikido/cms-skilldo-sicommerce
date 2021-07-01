@@ -1,14 +1,14 @@
 <?php
 /** PRODUCT-DETAIL ******************************************************************/
-if(!function_exists( 'woocommerce_products_detail' ) ) {
-	function woocommerce_products_detail() {
+if(!function_exists( 'product_detail_layout' ) ) {
+	function product_detail_layout() {
         $layout = option::get('layout_products','layout-products-1');
         if($layout == 'layout-products-1') $layout = 'product_detail';
         if($layout == 'layout-products-2') $layout = 'product_detail_layout_two';
         if($layout == 'layout-products-3') $layout = 'product_detail_layout_three';
         scmc_template( $layout );
 	}
-	add_action('content_products_detail', 'woocommerce_products_detail', 10);
+	add_action('content_products_detail', 'product_detail_layout', 10);
 }
 
 /** product slider **/

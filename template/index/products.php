@@ -19,7 +19,7 @@
 	<div class="row" id="js_product_list__item" style="margin-left: -7.5px; margin-right: 7.5px;">
 		<?php foreach ($objects as $key => $val): ?>
 			<div class="<?php echo $col;?>">
-			<?php echo wcmc_get_template('loop/item_product', array('val' =>$val));?>
+			<?php echo scmc_template('loop/item_product', array('val' =>$val));?>
 			</div>
 		<?php endforeach ?>
 	</div>

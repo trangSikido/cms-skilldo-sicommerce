@@ -1,4 +1,4 @@
-<div class="wcmc-price-detail">
+<div class="price-detail">
 	<?php if($object->price == 0 && $object->price == 0) { ?>
 	<p class="price"><span id="product-detail-price"><?php echo _price_none();?></span></p>
 	<?php } ?>

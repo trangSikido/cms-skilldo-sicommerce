@@ -1,4 +1,4 @@
-<div class="item woocommerce-pr-object <?php echo 'box-shadow-'.option::get('product_shadow', 0);?> <?php echo 'box-shadow-'.option::get('product_shadow_hover', 0).'-hover';?>">
+<div class="item product-item <?php echo 'box-shadow-'.option::get('product_shadow', 0);?> <?php echo 'box-shadow-'.option::get('product_shadow_hover', 0).'-hover';?>">
 	<?php
 		/**
 		 * hook product_object_info_after
@@ -16,7 +16,7 @@
 			<?php
 				/**
 				 * hook product_object_image
-				 * @hook woocommerce_product_object_image - 10
+				 * @hook product_object_image - 10
 				 */
 				do_action( 'product_object_image', $val );
 			?>
@@ -32,9 +32,9 @@
 		<?php
 			/**
 			 * hook product_object_info
-			 * @hook woocommerce_product_object_title - 10
-			 * @hook woocommerce_product_object_price - 20
-			 * @hook woocommerce_product_object_description - 30
+			 * @hook product_object_title - 10
+			 * @hook product_object_price - 20
+			 * @hook product_object_description - 30
 			 */
 			do_action( 'product_object_info', $val );
 		?>

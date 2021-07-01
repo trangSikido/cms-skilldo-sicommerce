@@ -8,7 +8,7 @@ function product_admin_form_input($form) {
     FormBuilder::addGroup('right', 'category', 'Phân loại', 'media');
     FormBuilder::addField('category', 'code', ['label' => 'Mã sản phẩm', 'type' => 'text', 'note' => 'Nhập mã sản phẩm (SKU) nếu có.']);
     FormBuilder::addField('category', 'category_id', ['label' => 'Danh mục', 'type' => 'popover', 'module' => 'products_categories']);
-    if(option::get('product_supplier') == 1 && version_compare( cms_info('version'), '3.0.0') >= 0 && version_compare( option::get('wcmc_database_version'), '1.3') >= 0 ) {
+    if(option::get('product_supplier') == 1) {
         $supplier_options = Suppliers::getsOption();
         FormBuilder::addField('category', 'supplier_id', ['label' => 'Nhà sản xuất', 'type' => 'popover', 'module' => 'supplier', 'multiple' => false, 'options' => $supplier_options]);
         unset($supplier_options[0]);

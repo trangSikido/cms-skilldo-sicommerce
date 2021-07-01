@@ -386,13 +386,13 @@ if(!function_exists('wcmc_get_template_version')) {
 
         $ci =& get_instance();
 
-        $path = VIEWPATH.$ci->data['template']->name.'/woocommerce/version.php';
+        $path = VIEWPATH.$ci->data['template']->name.'/sicommerce/version.php';
 
         $version = '1.0.0';
 
         if(!file_exists($path)) {
 
-            $path = $ci->plugin->dir.'/woocommerce/template/version.php';
+            $path = $ci->plugin->dir.'/sicommerce/template/version.php';
 
             if(!file_exists($path)) {
 

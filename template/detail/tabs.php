@@ -1,17 +1,16 @@
 <?php
 /**
- * woocommerce_product_tabs filters
- * @hook woocommerce_detail_tab_default filters
+ * product_tabs filters
+ * @hook product_detail_tab_default filters
  */
-$tabs = apply_filters( 'woocommerce_product_tabs', []);
-$tabs = apply_filters( 'product_tabs', $tabs);
+$tabs = apply_filters( 'product_tabs', []);
 if(have_posts($tabs)): ?>
 <div role="tabpanel">
 	<!-- Nav tabs -->
 	<ul class="nav nav-tabs" role="tablist">
 		<?php foreach ( $tabs as $key => $tab ) : ?>
 		<li class="<?= ($key == 'content')?'active':'';?>">
-			<a href="#tab-<?= $key;?>" aria-controls="<?= $key;?>" role="tab" data-toggle="tab"><?= __($tab['title'], 'wcmc_tab_title_'.$key);?></a>
+			<a href="#tab-<?= $key;?>" aria-controls="<?= $key;?>" role="tab" data-toggle="tab"><?= __($tab['title'], 'product_tab_title_'.$key);?></a>
 		</li>
 		<?php endforeach; ?>
 	</ul>

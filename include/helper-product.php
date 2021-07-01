@@ -582,7 +582,7 @@ Class Product {
 
                 if( is_numeric($args['where_category']) ) {
 
-                    $args['where_category'] = wcmc_get_category( $args['where_category'] );
+                    $args['where_category'] = ProductCategory::get( $args['where_category'] );
                 }
 
                 if( have_posts($args['where_category']) ) $data_category	= $model->gets_relationship_list($model->gets_category_sub($args['where_category']), 'object_id', 'products');
@@ -1229,7 +1229,7 @@ Class Product {
 
             if( is_numeric($args['where_category']) ) {
 
-                $args['where_category'] = wcmc_get_category( $args['where_category'] );
+                $args['where_category'] = ProductCategory::get( $args['where_category'] );
             }
 
             if( have_posts($args['where_category']) ) {
