@@ -6,23 +6,50 @@ Class Product_Page_Search {
 
         if( $type == 'products' ) {
 
-            $args = [
-                'where' 	 => ['public' => 1, 'trash' => 0],
-                'where_like' => ['title' => [$keyword]],
-            ];
+            $object = Product::get(['where' => ['code' => $keyword, 'type <>' => 'trash']]);
 
-            if(InputBuilder::get('category') != null && InputBuilder::get('category') != 0) {
-
-                $category = Str::clear(InputBuilder::get('category'));
-
-                $args['where_category'] = $category;
-
-                $args['join'] = true;
+            if(have_posts($object) && $object->type != 'products') {
+                $object = Product::get(['where' => ['id' => $object->parent_id]]);
             }
 
-            $args = apply_filters('product_search_args', $args);
+            $objects = [];
 
-            $objects = apply_filters('product_search_data', Product::gets($args));
+            if(have_posts($object)) $objects[] = $object;
+
+            if(!have_posts($objects)) {
+
+                if(Option::get('product_fulltext_search', false) == true) {
+
+                    $keywordFull = '+' . $keyword;
+
+                    $keywordFull = str_replace(' ', ' +', $keywordFull);
+
+                    $args = [
+                        'where'     => "MATCH(title) AGAINST('" . $keywordFull . "' IN BOOLEAN MODE) > 0 AND `public` = 1 AND `trash` = 0 AND `type` = 'product'",
+                        'select'    => "*, MATCH(title) AGAINST('" . $keywordFull . "' IN BOOLEAN MODE) as score",
+                        'orderby'   => 'score desc'
+                    ];
+                }
+                else {
+                    $args = [
+                        'where' 	 => ['public' => 1, 'trash' => 0],
+                        'where_like' => ['title' => [$keyword]],
+                    ];
+                }
+
+                if (InputBuilder::get('category') != null && InputBuilder::get('category') != 0) {
+
+                    $category = removeHtmlTags(InputBuilder::get('category'));
+
+                    $args['where_category'] = $category;
+
+                    $args['join'] = true;
+                }
+
+                $args = apply_filters('product_search_args', $args);
+
+                $objects = apply_filters('product_search_data', Product::gets($args));
+            }
 
             $ci->template->set_layout('template-full-width');
         }

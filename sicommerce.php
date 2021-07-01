@@ -87,7 +87,8 @@ class sicommerce {
             'product_hiden_price'       => 1,
             'product_hiden_description' => 0,
             'product_price_color'       => 0, // version 1.8.3
-            'product_version'              => SCMC_VERSION, // version 2.0.5
+            'product_version'           => SCMC_VERSION, // version 2.0.5
+            'product_fulltext_search'   => false, // version 3.4.0
         );
 
         return $option;
