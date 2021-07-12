@@ -72,7 +72,7 @@ if(!function_exists('product_detail_social')) {
     function product_detail_social() {
         scmc_template('detail/social-share-btn');
     }
-    add_action('product_detail_info','product_detail_social', 40);
+    add_action('product_detail_info','product_detail_social', 30);
 }
 
 /** product item **/
