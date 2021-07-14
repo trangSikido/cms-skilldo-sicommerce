@@ -1,4 +1,62 @@
 <?php
+Class Product_Popover {
+    static public function registerSearch($search) {
+       if($search == 'products') return 'Product_Popover::search';
+       return $search;
+    }
+    static public function registerLoad($search) {
+        if($search == 'products') return 'Product_Popover::load';
+        return $search;
+    }
+    static public function search($ci, $model) {
+        $result['message'] 	= 'Không có kết quả nào.';
+        $result['status'] 	= 'error';
+        $result['items']     = [];
+        if(InputBuilder::post()) {
+            $keyword    = Str::ascii(trim(InputBuilder::post('keyword')));
+            $page       = (int)InputBuilder::post('page') - 1;
+            $limit      = (int)InputBuilder::post('limit');
+            $objects    = Product::gets([
+                'where'         => ['trash' => 0],
+                'params'        => ['select' => 'id, title, image, price, price_sale', 'limit' => $limit, 'start' => $page*$limit],
+                'where_like'    => ['title' => array($keyword)]
+            ]);
+            if(have_posts($objects)) {
+                foreach ($objects as $value) {
+                    $item = [
+                        'id'    => $value->id,
+                        'image' => Template::imgLink($value->image),
+                        'name'  => $value->title,
+                    ];
+                    $item['data'] = htmlentities(json_encode($item));
+                    $result['items'][]  = $item;
+                }
+                $result['status'] 	= 'success';
+            }
+            $result['total'] = count($result['items']);
+        }
+        echo json_encode($result);
+    }
+    static public function load($listID, $taxonomy) {
+        $items = [];
+        if(have_posts($listID)) {
+            $objects    = Product::gets([
+                'params'    => ['select' => 'id, title, image, price, price_sale'],
+                'where'     => ['trash' => 0],
+                'where_in'  => ['field' => 'id', 'data' => $listID]
+            ]);
+
+            foreach ($objects as $value) {
+                $item = ['id' => $value->id, 'image' => Template::imgLink($value->image), 'name' => $value->title];
+                $items[]  = $item;
+            }
+        }
+        return $items;
+    }
+}
+add_filter('popover_advance_search_custom', 'Product_Popover::registerSearch');
+add_filter('popover_advance_load_custom', 'Product_Popover::registerLoad');
+Ajax::admin('Product_Popover::search');
 /**
  * INPUT POPOVER product
  */

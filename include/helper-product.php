@@ -1400,7 +1400,6 @@ Class Product {
         $price_sale      = (int)str_replace('.', '', trim($price_sale));
 
         if($type == 'product' && empty($slug)) {
-
             $slug = $ci->create_slug( Str::clear( $title ), $model);
         }
 

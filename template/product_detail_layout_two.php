@@ -8,7 +8,7 @@
     do_action( 'product_detail_before', $object ); //ver 3.0.0
     ?>
     <div class="row">
-        <div class="col-md-5" id="surround">
+        <div class="col-md-4" id="surround">
             <?php
             /**
              * product_detail_slider hook.
@@ -18,7 +18,7 @@
             do_action( 'product_detail_slider', $object ); //ver 3.0.0
             ?>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-5">
             <?php
             /**
              * products_detail_info hook.
