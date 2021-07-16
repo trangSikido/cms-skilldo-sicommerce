@@ -47,12 +47,12 @@ class skd_product_list_table extends skd_object_list_table {
 
     function column_price($item, $column_name, $module, $table) {
         $str = number_format($item->price);
-        echo '<a href="#" data-pk="'.$item->id.'" data-name="price" data-table="'.$table.'" class="edittable-dl-text" >'.$str.'</a>';
+        echo '<a href="#" data-pk="'.$item->id.'" data-name="price" class="js_products_price__update" >'.$str.'</a>';
     }
 
     function column_price_sale($item, $column_name, $module, $table) {
         $str = number_format($item->price_sale);
-        echo '<a href="#" data-pk="'.$item->id.'" data-name="price_sale" data-table="'.$table.'" class="edittable-dl-text" >'.$str.'</a>';
+        echo '<a href="#" data-pk="'.$item->id.'" data-name="price_sale" class="js_products_price__update" >'.$str.'</a>';
     }
 
     function column_collection($item, $column_name) {

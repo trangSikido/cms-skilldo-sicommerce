@@ -40,7 +40,7 @@ $(function () {
                 value: product_collections_value,
                 source: product_collections_source,
                 params: function (params) {
-                    params.action = 'Product_Admin_Ajax::collectionSave';
+                    params.action = 'Product_Admin_Ajax::saveCollection';
                     return params;
                 },
                 url: base + '/ajax',
@@ -95,5 +95,19 @@ $(function () {
             model.modal('show');
             return false;
         }
-    })
+    });
+
+    $('.js_products_price__update').editable({
+        type 	: 'text',
+        url 	: ajax,
+        params: function(params) {
+            params.action = 'Product_Admin_Ajax::updatePrice';
+            return params;
+        },
+        success: function(response, newValue) {
+            if(response.status == 'error') {
+                show_message(response.message, response.status);
+            }
+        }
+    });
 });
