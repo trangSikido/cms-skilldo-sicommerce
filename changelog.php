@@ -8,6 +8,8 @@
  * @param CORE - Đổi Class Supplier thành Suppliers
  * @param CORE - Thay đổi tên, class và xóa tên hook của phiên bản củ
  * @param CORE - Thêm tùy chọn "product_fulltext_search"
+ * @param CORE - Hỗ trợ input popover advance dạng product từ cms version 4.6.0
+ * @param TEMPLATE 	- Thiết kế lại giao diện chia sẽ mạng xã hội
  * @---version ::3.3.0
  * @param CORE 	 - Thêm hot key F2 thêm sản phẩm
  * @param CORE 	 - Thêm hot key F3 thêm danh mục sản phẩm
