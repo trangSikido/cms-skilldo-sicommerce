@@ -57,6 +57,111 @@ Class Product_Popover {
 add_filter('popover_advance_search_custom', 'Product_Popover::registerSearch');
 add_filter('popover_advance_load_custom', 'Product_Popover::registerLoad');
 Ajax::admin('Product_Popover::search');
+
+Class Product_Variable_Popover {
+    static public function registerSearch($search) {
+        if($search == 'products-variable') return 'Product_Variable_Popover::search';
+        return $search;
+    }
+    static public function registerLoad($search) {
+        if($search == 'products-variable') return 'Product_Variable_Popover::load';
+        return $search;
+    }
+    static public function search($ci, $model) {
+        $result['message'] 	= 'Không có kết quả nào.';
+        $result['status'] 	= 'error';
+        $result['items']     = [];
+        if(InputBuilder::post()) {
+            $keyword    = Str::ascii(trim(InputBuilder::post('keyword')));
+            $page       = (int)InputBuilder::post('page') - 1;
+            $limit      = (int)InputBuilder::post('limit');
+            $objects    = Product::gets([
+                'where'         => ['trash' => 0],
+                'params'        => ['select' => 'id, title, image, price, price_sale', 'limit' => $limit, 'start' => $page*$limit],
+                'where_like'    => ['title' => array($keyword)]
+            ]);
+            if(have_posts($objects)) {
+                foreach ($objects as $value) {
+                    $variables = Variation::gets(['product' => $value->id]);
+                    if(have_posts($variables)) {
+                        foreach ($variables as $variable) {
+                            $attr_name = '';
+                            foreach ($variable->items as $attr_id) {
+                                $attr = Attribute::getItem($attr_id);
+                                if( have_posts($attr)) {
+                                    $attr_name .= ' - <span style="font-weight: bold">'.$attr->title.'</span>';
+                                }
+                            }
+                            $variable->title .= $attr_name;
+                            $item = [
+                                'id'    => $variable->id,
+                                'image' => (!empty($variable->image)) ? Template::imgLink($variable->image) : Template::imgLink($value->image),
+                                'name'  => $variable->title,
+                            ];
+                            $item['data'] = htmlentities(json_encode($item));
+                            $result['items'][]  = $item;
+                        }
+                    }
+                    else {
+                        $item = [
+                            'id'    => $value->id,
+                            'image' => Template::imgLink($value->image),
+                            'name'  => $value->title,
+                        ];
+                        $item['data'] = htmlentities(json_encode($item));
+                        $result['items'][]  = $item;
+                    }
+                }
+                $result['status'] 	= 'success';
+            }
+            $result['total'] = count($result['items']);
+        }
+        echo json_encode($result);
+    }
+    static public function load($listID, $taxonomy) {
+        $items = [];
+        if(have_posts($listID)) {
+            $objects    = Product::gets([
+                'params'    => ['select' => 'id, title, image, price, price_sale, type'],
+                'where'     => ['trash' => 0, 'type <>' => 'trash'],
+                'where_in'  => ['field' => 'id', 'data' => $listID]
+            ]);
+            foreach ($objects as $value) {
+                if($value->type == 'product') {
+                    $item = [
+                        'id'    => $value->id,
+                        'image' => Template::imgLink($value->image),
+                        'name'  => $value->title,
+                    ];
+                    $items[]  = $item;
+                }
+                else {
+                    if(empty($value->image)) {
+                        $product = Product::gets($value->parent_id);
+                    }
+                    $attr_name = '';
+                    foreach ($value->items as $attr_id) {
+                        $attr = Attribute::getItem($attr_id);
+                        if( have_posts($attr)) {
+                            $attr_name .= ' - <span style="font-weight: bold">'.$attr->title.'</span>';
+                        }
+                    }
+                    $value->title .= $attr_name;
+                    $item = [
+                        'id'    => $value->id,
+                        'image' => (!empty($value->image)) ? Template::imgLink($value->image) : Template::imgLink($product->image),
+                        'name'  => $value->title,
+                    ];
+                    $items[]  = $item;
+                }
+            }
+        }
+        return $items;
+    }
+}
+add_filter('popover_advance_search_custom', 'Product_Variable_Popover::registerSearch');
+add_filter('popover_advance_load_custom', 'Product_Variable_Popover::registerLoad');
+Ajax::admin('Product_Variable_Popover::search');
 /**
  * INPUT POPOVER product
  */
@@ -252,17 +357,17 @@ Class Product_Variable_Admin_Popover {
 
         foreach ($object as $item) {
             $str .= '
-        <li class="option option-'.$item->id.' '.$active.'" data-key="'.$item->id.'" data-product="'.htmlentities(json_encode($item)).'">
-            <div class="item-pr">
-                <div class="item-pr__img">
-                    <img src="'.$item->image.'">
+            <li class="option option-'.$item->id.' '.$active.'" data-key="'.$item->id.'" data-product="'.htmlentities(json_encode($item)).'">
+                <div class="item-pr">
+                    <div class="item-pr__img">
+                        <img src="'.$item->image.'">
+                    </div>
+                    <div class="item-pr__title">
+                        <span class="label-option">'.$item->title.((!empty($item->attr_name)) ? ' <small style="font-size:11px;color: #29bc94;">'.$item->attr_name.'</small>' : '').'</span>
+                    </div>
+                    <div class="item-pr__price">'.$item->price_html.'</div>
                 </div>
-                <div class="item-pr__title">
-                    <span class="label-option">'.$item->title.((!empty($item->attr_name)) ? ' <small style="font-size:11px;color: #29bc94;">'.$item->attr_name.'</small>' : '').'</span>
-                </div>
-                <div class="item-pr__price">'.$item->price_html.'</div>
-            </div>
-        </li>';
+            </li>';
         }
 
         return $str;

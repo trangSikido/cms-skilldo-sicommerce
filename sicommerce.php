@@ -3,7 +3,7 @@
 Plugin name     : sicommerce
 Plugin class    : sicommerce
 Plugin uri      : http://sikido.vn
-Description     : Tạo và quản lý sản phẩm thương mail của bạn.
+Description     : Tạo và quản lý sản phẩm thương mại của bạn.
 Author          : Nguyễn Hữu Trọng
 Version         : 3.4.0
 */
