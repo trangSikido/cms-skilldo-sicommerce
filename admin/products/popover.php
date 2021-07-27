@@ -77,7 +77,7 @@ Class Product_Variable_Popover {
             $limit      = (int)InputBuilder::post('limit');
             $objects    = Product::gets([
                 'where'         => ['trash' => 0],
-                'params'        => ['select' => 'id, title, image, price, price_sale', 'limit' => $limit, 'start' => $page*$limit],
+                'params'        => ['select' => 'id, title, image, price, price_sale, parent_id', 'limit' => $limit, 'start' => $page*$limit],
                 'where_like'    => ['title' => array($keyword)]
             ]);
             if(have_posts($objects)) {
@@ -122,7 +122,7 @@ Class Product_Variable_Popover {
         $items = [];
         if(have_posts($listID)) {
             $objects    = Product::gets([
-                'params'    => ['select' => 'id, title, image, price, price_sale, type'],
+                'params'    => ['select' => 'id, title, image, price, price_sale, type, parent_id'],
                 'where'     => ['trash' => 0, 'type <>' => 'trash'],
                 'where_in'  => ['field' => 'id', 'data' => $listID]
             ]);
