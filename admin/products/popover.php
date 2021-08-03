@@ -136,14 +136,17 @@ Class Product_Variable_Popover {
                     $items[]  = $item;
                 }
                 else {
+                    $value = Variation::get($value->id);
                     if(empty($value->image)) {
-                        $product = Product::gets($value->parent_id);
+                        $product = Product::get(['where' => ['id' => $value->parent_id], 'select' => 'id, title, image']);
                     }
                     $attr_name = '';
-                    foreach ($value->items as $attr_id) {
-                        $attr = Attribute::getItem($attr_id);
-                        if( have_posts($attr)) {
-                            $attr_name .= ' - <span style="font-weight: bold">'.$attr->title.'</span>';
+                    if(!empty($value->items)) {
+                        foreach ($value->items as $attr_id) {
+                            $attr = Attribute::getItem($attr_id);
+                            if( have_posts($attr)) {
+                                $attr_name .= ' - <span style="font-weight: bold">'.$attr->title.'</span>';
+                            }
                         }
                     }
                     $value->title .= $attr_name;
