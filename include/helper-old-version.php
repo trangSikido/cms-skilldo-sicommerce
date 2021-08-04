@@ -1,4 +1,5 @@
 <?php
+class woocommerce {}
 /** function thao tác với category phiên bản củ */
 if(!function_exists('get_product')) {
     function get_product( $args = []) {

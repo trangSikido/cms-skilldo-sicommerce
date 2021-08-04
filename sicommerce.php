@@ -5,7 +5,7 @@ Plugin class    : sicommerce
 Plugin uri      : http://sikido.vn
 Description     : Tạo và quản lý sản phẩm thương mại của bạn.
 Author          : Nguyễn Hữu Trọng
-Version         : 3.4.0
+Version         : 3.4.1
 */
 define('SCMC_NAME', 'sicommerce');
 
@@ -15,11 +15,9 @@ define('SCMC_PATH', Path::plugin(SCMC_NAME).'/');
 
 define('WCMC_PATH', SCMC_PATH);
 
-define('SCMC_VERSION', '3.4.0');
+define('SCMC_VERSION', '3.4.1');
 
 define('SCMC_TEMPLATE', '2.1.0');
-
-class woocommerce {}
 
 class sicommerce {
 

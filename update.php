@@ -299,7 +299,7 @@ function scmc_database_add_table() {
 		`weight` int(11) NOT NULL DEFAULT '0'
 	) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;");
 
-    $model->query("ALTER TABLE `".CLE_PREFIX."products` ADD PRIMARY KEY (`id`);");
+    //$model->query("ALTER TABLE `".CLE_PREFIX."products` ADD PRIMARY KEY (`id`);");
     //$model->query("ALTER TABLE `".CLE_PREFIX."products` ADD FULLTEXT KEY `title` (`title`);");
 
 	$model->query("CREATE TABLE IF NOT EXISTS `".CLE_PREFIX."products_categories` (
