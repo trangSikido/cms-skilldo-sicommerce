@@ -1,5 +1,8 @@
 # Overview
 This is a plugin for Skilldo CMS so you have Skilldo CMS first to use this plugin.
+- Product management function
+- Product category management function
+- Brand management function
 
 # Installation
 Download, change folder name to sicommerce and copy source code into /views/plugins or download in store of cms
