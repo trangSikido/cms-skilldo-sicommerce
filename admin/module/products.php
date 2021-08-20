@@ -49,10 +49,12 @@ class products extends MY_Controller {
         /*===================================================
         PHÂN TRANG
         ====================================================*/
-        $url        = Url::admin().'/'.$this->data['module'].'?page={page}';
+        $url        = Url::admin().$this->data['module'].'?page={page}';
         if(!empty($keyword))    $url .= '&keyword='.$keyword;
         if($trash == 1)         $url .= '&status=trash';
         if($category_id != 0)   $url .= '&category='.$category_id;
+        if($collection != 0)    $url .= '&collection='.$collection;
+        $url = apply_filters('admin_product_controllers_pagination_url', $url);
         $this->data['pagination'] = pagination($total_rows, $url, option::get('admin_pg_page',10));
         /*===================================================
         LẤY DỮ LIỆU

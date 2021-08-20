@@ -1,5 +1,6 @@
 <?php
 /**
+ * @---version ::3.4.1
  * @---version ::3.4.0
  * @param BACKEND - Thêm xem đường link vào table thương hiệu trường name
  * @param BACKEND - Thêm trường thương hiệu vào danh sách khi thêm menu trong admin
