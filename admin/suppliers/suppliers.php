@@ -14,11 +14,11 @@ function admin_page_suppliers() {
             'module'=> 'suppliers',
         );
         $table_list = new skd_suppliers_list_table($args);
-        include SCMC_PATH.'/views/suppliers/html-suppliers-index.php';
+        include SCMC_PATH.'admin/views/suppliers/html-suppliers-index.php';
     }
     if($view == 'add') {
         $form = suppliers_admin_form_input();
-        include SCMC_PATH.'views/suppliers/html-suppliers-save.php';
+        include SCMC_PATH.'admin/views/suppliers/html-suppliers-save.php';
     }
     if($view == 'edit') {
         $form   = suppliers_admin_form_input();
