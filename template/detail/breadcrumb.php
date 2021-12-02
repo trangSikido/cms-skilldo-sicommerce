@@ -1,6 +1,6 @@
 <?php
 
-if( !isset($category)) $category = array();
+if( !isset($category)) $category = [];
 
 $model = get_model('products');
 

@@ -146,6 +146,16 @@ Class ProductCategory {
         return $categories;
     }
 
+    static public function getsSub( $category = [] ) {
+
+        $model = get_model('products_categories', 'backend_products');
+        $model->settable('products_categories');
+        $model->settable_category('products_categories');
+        $model->settable_metabox('products_categories_metadata');
+
+        return $listID = $model->gets_category_sub($category);
+    }
+
     static public function count( $args = [] ) {
 
         if(!have_posts($args)) $args = array('where' => [], 'params' => []);
@@ -384,11 +394,11 @@ Class ProductCategory {
 
         $cate_ID = (int)Str::clear($cate_ID);
 
-        if( $cate_ID == 0 ) return false;
+        if($cate_ID == 0) return false;
 
         $model  = get_model('products_categories', 'backend_post')->settable('products_categories')->settable_category('products_categories');
 
-        $category  = static::get( $cate_ID );
+        $category  = static::get($cate_ID);
 
         if( have_posts($category) ) {
 
@@ -438,7 +448,10 @@ Class ProductCategory {
                     //delete menu
                     $model->settable('menu');
                     $model->delete_where_in(['field' => 'object_id', 'data' => $listID], ['object_type' => 'products_categories']);
-                    CacheHandler::delete('menu-', true);
+
+                    CacheHandler::delete('menu_item_', true);
+
+                    CacheHandler::delete('products_categories_', true);
 
                     return $listID;
                 }
@@ -455,9 +468,8 @@ Class ProductCategory {
         if(!have_posts($cate_ID)) return false;
 
         foreach ($cate_ID as $key => $id) {
-            if( static::delete($id) != false ) $result[] = $id;
+            if(static::delete($id) != false) $result[] = $id;
         }
-
         if(have_posts($result)) return $result;
 
         return false;
@@ -1758,6 +1770,24 @@ Class Product {
         }
 
         return false;
+    }
+
+    static public function update($update, $args) {
+
+        if(!have_posts($update)) {
+            return new SKD_Error('invalid_update', __('Không có trường dữ liệu nào được cập nhật.'));
+        }
+
+        if(!have_posts($args)) {
+            return new SKD_Error('invalid_update', __('Không có điều kiện cập nhật.'));
+        }
+
+        return apply_filters( 'update_post', get_model()->settable('products')->update_data($update, $args, 'products'), $update, $args);
+    }
+
+    static public function restore($args) {
+
+        return get_model()->settable('products')->update_data(['trash' => 0], $args, 'products');
     }
 
     static public function getMeta( $product_id, $key = '', $single = true) {

@@ -68,30 +68,48 @@ if(!function_exists('get_controllers_product_index')) {
 
         if(empty($slug)) $slug = InputBuilder::get('slug');
 
-        $category           = ProductCategory::get(['where' => array('slug' => $slug)]);
-
         $status             = (int)InputBuilder::get('status');
 
         $page               = (int)InputBuilder::get('page');
 
         $product_pr_page    = (int)option::get('product_pr_page');
 
-        $args   = [];
+        $args       = [];
 
-        $where  = [
-            'trash' => 0,
-            'public' => 1,
-        ];
+        $brand      = [];
 
-        $where = apply_filters( 'controllers_product_index_where', $where );
+        $supplier   = [];
+
+        $where      = ['trash' => 0, 'public' => 1];
+
+        $category  = ProductCategory::get(['where' => array('slug' => $slug)]);
+
+        if(!have_posts($category)) {
+
+            $brand  = Brands::get(['where' => ['slug' => $slug]]);
+
+            if(!have_posts($brand)) {
+                $supplier = Suppliers::get(['where' => ['slug' => $slug]]);
+            }
+        }
 
         if(is_array($where) && $status >= 1 && $status <= 3) {
             $where['status'.$status] =  1;
         }
 
-        if( have_posts($category) ) {
+        if(have_posts($category)) {
             $url = Url::base(Url::permalink($category->slug).'?page={page}');
             $args['where_category'] = $category;
+        }
+
+        if(have_posts($brand)) {
+            $url = Url::base(Url::permalink($brand->slug).'?page={page}');
+            $where['brand_id'] = $brand->id;
+        }
+
+        if(have_posts($supplier)) {
+            $url = Url::base(Url::permalink($supplier->slug).'?page={page}');
+            $where['supplier_id'] = $supplier->id;
         }
 
         if($slug == '') {
@@ -103,8 +121,13 @@ if(!function_exists('get_controllers_product_index')) {
             }
             if(have_posts($data_url)) $url .= '&'. http_build_query($data_url);
         }
+
+        $where = apply_filters('controllers_product_index_where', $where);
+
         $args['where']          = $where;
+
         $args 					= apply_filters('controllers_product_index_args', $args);
+
         $total_rows 			= apply_filters('controllers_product_index_count', Product::count($args));
 
         if( $total_rows > 0 ) {
@@ -148,10 +171,12 @@ if(!function_exists('get_controllers_product_index')) {
         $objects = apply_filters( 'controllers_product_index_objects', Product::gets($args),$args);
 
         $result = [];
-        $result['pagination']   = $pagination;
-        $result['total']    = $total_rows;
-        $result['objects']  = $objects;
-        $result['category']  = $category;
+        $result['pagination'] = $pagination;
+        $result['total']      = $total_rows;
+        $result['objects']    = $objects;
+        $result['category']   = $category;
+        $result['brand']      = $brand;
+        $result['supplier']   = $supplier;
         return $result;
     }
 }

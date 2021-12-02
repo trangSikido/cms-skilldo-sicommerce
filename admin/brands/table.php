@@ -11,15 +11,15 @@ class skd_brands_list_table extends skd_object_list_table {
         return apply_filters( "manage_brands_columns", $this->_column_headers );
     }
 
-    function column_default( $item, $column_name ) {
+    function column_default($item, $column_name) {
         do_action( 'manage_brands_custom_column', $column_name, $item );
     }
 
-    function column_image($item, $column_name, $module, $table) {
+    function column_image($item) {
         echo '<img src="'.Template::imgLink($item->image).'" alt="" style="width:50px;" loading="lazy">';
     }
 
-    function column_name($item, $column_name, $module, $table) {
+    function column_name($item) {
         ?>
         <div class="title pull-left">
             <h3><?= $item->name;?></h3>
@@ -37,12 +37,21 @@ class skd_brands_list_table extends skd_object_list_table {
     }
 
     function _column_action($item, $column_name, $module, $table, $class) {
-        $class .= ' text-center';
-        echo '<td class="'.$class.'">';
+        echo '<td class="'.$class.' text-center">';
         echo '<a href="'.Url::admin('plugins?page=brands&view=edit&id='.$item->id).'" class="btn-blue btn">'.Admin::icon('edit').'</a>';
-        echo '<button class="btn-red btn delete" data-id="'.$item->id.'" data-table="'.$table.'">'.Admin::icon('delete').'</button>';
+        echo '<button class="btn btn-red js_btn_confirm" data-trash="disable" data-action="delete" data-ajax="Cms_Ajax_Action::delete" data-id="'.$item->id.'" data-module="Brands" data-heading="Xóa Dữ liệu" data-description="Bạn chắc chắn muốn xóa thương hiệu <b>'.html_escape($item->name).'</b> ?">'.Admin::icon('delete').'</button>';
         echo "</td>";
     }
 
-    function search_right() {}
+    function search_left() {
+        ?>
+        <button class="btn btn-red js_btn_confirm" style="display: none;" data-action="delete"
+                data-ajax="Cms_Ajax_Action::delete" data-trash="disable" data-module="Brands"
+                data-heading="Xóa Dữ liệu" data-description="Bạn chắc chắn muốn xóa trường dữ liệu này?"
+                data-toggle="tooltip" data-placement="top"
+                title="Xóa"><?php echo Admin::icon('delete'); ?></button>
+        <?php
+    }
+
+    function search_right(){}
 }

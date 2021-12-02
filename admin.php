@@ -14,7 +14,7 @@ if(!function_exists('admin_scmc_assets')) {
             Admin::asset()->location('footer')->add('scmc', SCMC_PATH . 'assets/js/admin/admin-scmc-script.js');
         }
     }
-    add_action('admin_init',    'admin_scmc_assets');
+    add_action('admin_init','admin_scmc_assets');
 }
 
 function admin_product_hot_key($list) {

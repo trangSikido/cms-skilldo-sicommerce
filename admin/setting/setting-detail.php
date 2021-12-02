@@ -43,7 +43,7 @@ Class Product_Admin_Setting_Detail {
     public static function productDetailItem() {
         $layout = Option::get('layout_products','layout-products-1');
         if($layout == 'layout-products-2' || $layout == 'layout-products-3') {
-            $product_item = Option::get('product_item', array('enable' => 0, 'title' => '', 'item' => array()));
+            $product_item = Option::get('product_item', array('enable' => 0, 'title' => '', 'item' => []));
             scmc_include('admin/views/settings/product/product-detail-item', ['product_item' => $product_item]);
         }
     }

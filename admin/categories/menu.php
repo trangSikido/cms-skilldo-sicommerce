@@ -1,6 +1,6 @@
 <?php
 function product_category_admin_menu($list_object) {
-    $list_object['products_categories'] = array ( 'label' => 'Danh mục sản phẩm', 'type' => 'products_categories', 'data' => array());
+    $list_object['products_categories'] = array ( 'label' => 'Danh mục sản phẩm', 'type' => 'products_categories', 'data' => []);
     $list_object['products_categories']['data'] = [];
     $list_object['products_categories']['data'][0] = (object)array('id' => 0, 'name' => '<b>Sản phẩm</b>');
     $data = ProductCategory::gets(array('mutilevel' => 'data'));

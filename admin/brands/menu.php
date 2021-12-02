@@ -1,6 +1,6 @@
 <?php
 function brands_admin_menu($list_object) {
-    $list_object['brand'] = array ( 'label' => 'Thương hiệu', 'type' => 'brands', 'data' => array());
+    $list_object['brand'] = array ( 'label' => 'Thương hiệu', 'type' => 'brands', 'data' => []);
     $list_object['brand']['data'] = [];
     $data = Brands::gets();
     if(have_posts($data)) {

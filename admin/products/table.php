@@ -88,29 +88,45 @@ class skd_product_list_table extends skd_object_list_table {
 
     function _column_action($item, $column_name, $module, $table, $class) {
 
-        $url = Url::adminModule();
+        $url = Url::admin().'/'.$module.'/edit/'.$item->slug.'?page='.((InputBuilder::get('page') != '')?InputBuilder::get('page'):1);
 
-        $status = InputBuilder::get('status');
+        if(!empty(InputBuilder::get('category'))) $url .= '&category='.InputBuilder::get('category');
 
-        $url_type = '?page='.((InputBuilder::get('page') != '')?InputBuilder::get('page'):1);
-
-        if(!empty(InputBuilder::get('category'))) $url_type .= '&category='.InputBuilder::get('category');
-
-        $class .= ' text-center';
-
-        echo '<td class="'.$class.'">';
-        if($status == 'trash') {
-            echo '<button class="btn-blue btn js_product_btn__undo" data-table="products" data-id="'.$item->id.'">'.Admin::icon('undo').'</a>';
-            if( Auth::hasCap('product_delete') ) {
-                echo '<button class="btn-red btn delete" data-id="'.$item->id.'" data-table="'.$table.'">'.Admin::icon('delete').'</button>';
-            }
+        echo '<td class="'.$class.' text-center">';
+        if(InputBuilder::get('status') == 'trash') {
+            echo '<button class="btn btn-green js_btn_confirm" data-action="restore" data-ajax="Cms_Ajax_Action::restore" data-id="'.$item->id.'" data-module="Product" data-heading="Khôi phục dữ liệu" data-description="Bạn chắc chắn muốn khôi phục sản phẩm <b>'.html_escape($item->title).'</b> ?">'.Admin::icon('undo').'</button>';
+            if(Auth::hasCap('product_delete')) echo '<button class="btn btn-red js_btn_confirm" data-action="delete" data-ajax="Cms_Ajax_Action::delete" data-id="'.$item->id.'" data-module="Product" data-heading="Xóa Dữ liệu" data-description="Bạn chắc chắn muốn xóa sản phẩm <b>'.html_escape($item->title).'</b> ?">'.Admin::icon('delete').'</button>';
         } else {
-            echo '<a href="'.$url.'edit/'.$item->slug.$url_type.'" class="btn-blue btn">'.Admin::icon('edit').'</a>';
-            if( Auth::hasCap('product_delete') ) {
-                echo '<button class="btn-red btn trash" data-id="'.$item->id.'" data-table="'.$table.'">'.Admin::icon('delete').'</button>';
-            }
+            echo '<a href="'.$url.'" class="btn-blue btn">'.Admin::icon('edit').'</a>';
+            if(Auth::hasCap('product_delete')) echo '<button class="btn btn-red js_btn_confirm" data-action="delete" data-ajax="Cms_Ajax_Action::delete" data-id="'.$item->id.'" data-module="'.$module.'" data-trash="enable" data-heading="Xóa Dữ liệu" data-description="Bạn chắc chắn muốn xóa sản phẩm <b>'.html_escape($item->title).'</b> ?">'.Admin::icon('delete').'</button>';
         }
         echo "</td>";
+    }
+
+    function search_left() {
+        $cms = &get_instance();
+        $public = $cms->data['public'];
+        $trash  = $cms->data['trash'];
+        $status = InputBuilder::get('status');
+        $url       = Url::adminModule().((!empty($cms->urlType)) ? $cms->urlType : '');
+        $urlTrash  = (!empty($cms->urlType)) ? Url::adminModule($cms->urlType.'&status=trash') : Url::adminModule('?status=trash');
+        $text_status_normal = Admin::icon('edit').' <b class="number-count">'.$public.'</b>';
+        $text_status_trash  = Admin::icon('delete').' <b class="number-count">'.$trash.'</b>';
+        $active_status_normal = 'btn-white';
+        $active_status_trash = 'btn-white';
+        $trash_enable = 'enable';
+        if($status == 'trash') {
+            $active_status_trash = 'btn-theme';
+            $trash_enable = 'disable';
+        }
+        else {
+            $active_status_normal = 'btn-theme';
+        }
+        ?>
+        <a href="<?= $url;?>" class="btn <?php echo $active_status_normal;?>" data-toggle="tooltip" data-placement="top" title="Đã đăng"><?= $text_status_normal; ?></a>
+        <a href="<?= $urlTrash;?>" class="btn <?php echo $active_status_trash;?>" data-toggle="tooltip" data-placement="top" title="Thùng rác"><?= $text_status_trash; ?></a>
+        <?php if(Auth::hasCap('product_delete')) { ?><button class="btn btn-red js_btn_confirm" style="display: none;" data-action="delete" data-ajax="Cms_Ajax_Action::delete" data-trash="<?php echo $trash_enable;?>" data-module="Product" data-heading="Xóa Dữ liệu" data-description="Bạn chắc chắn muốn xóa trường dữ liệu này?" data-toggle="tooltip" data-placement="top" title="Xóa"><?php echo Admin::icon('delete');?></button><?php } ?>
+        <?php if($status == 'trash') { ?><button class="btn btn-green js_btn_confirm" style="display: none;" data-action="restore" data-ajax="Cms_Ajax_Action::restore" data-module="Product" data-heading="Khôi phục dữ liệu" data-description="Bạn chắc chắn muốn khôi phục trường dữ liệu này?" data-toggle="tooltip" data-placement="top" title="Khôi phục"><?php echo Admin::icon('undo');?></button><?php }
     }
 
     function search_right() {

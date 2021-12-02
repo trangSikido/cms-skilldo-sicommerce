@@ -1,6 +1,13 @@
 <?php
 /**
- * @---version ::3.4.1
+ * @---version ::3.5.0
+ * @param CORE - Update PHP 8.0
+ * @param CORE - Update CMS 5.0
+ * @param CORE - Chuyển trình hiển thị sản phẩm thương hiệu thành trang sản phẩm
+ * @param CORE - Chuyển trình hiển thị sản phẩm nhà sản xuất thành trang sản phẩm
+ * @param CORE - Thêm filter controllers_product_index_data thay đổi function lấy controllers sản phẩm trang index
+ * @param TEMPLATE - Thêm filter product_detail_heading_related điều chỉnh tiêu đề "sản phẩm liên quan"
+ * @param TEMPLATE - Thêm filter product_detail_heading_watched điều chỉnh tiêu đề "sản phẩm đã xem"
  * @---version ::3.4.0
  * @param BACKEND - Thêm xem đường link vào table thương hiệu trường name
  * @param BACKEND - Thêm trường thương hiệu vào danh sách khi thêm menu trong admin

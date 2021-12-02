@@ -36,11 +36,18 @@ class skd_suppliers_list_table extends skd_object_list_table {
         $class .= ' text-center';
         echo '<td class="'.$class.'">';
         echo '<a href="'.Url::admin('plugins?page=suppliers&view=edit&id='.$item->id).'" class="btn-blue btn">'.Admin::icon('edit').'</a>';
-        echo '<button class="btn-red btn delete" data-id="'.$item->id.'" data-table="'.$table.'">'.Admin::icon('delete').'</button>';
+        echo '<button class="btn btn-red js_btn_confirm" data-trash="disable" data-action="delete" data-ajax="Cms_Ajax_Action::delete" data-id="'.$item->id.'" data-module="Suppliers" data-heading="Xóa Dữ liệu" data-description="Bạn chắc chắn muốn xóa thương hiệu <b>'.html_escape($item->name).'</b> ?">'.Admin::icon('delete').'</button>';
         echo "</td>";
     }
 
-    function search_right() {
- 
+    function search_left() {
+        ?>
+        <button class="btn btn-red js_btn_confirm" style="display: none;" data-action="delete"
+                data-ajax="Cms_Ajax_Action::delete" data-trash="disable" data-module="Suppliers"
+                data-heading="Xóa Dữ liệu" data-description="Bạn chắc chắn muốn xóa trường dữ liệu này?"
+                data-toggle="tooltip" data-placement="top" title="Xóa"><?php echo Admin::icon('delete'); ?></button>
+        <?php
     }
+
+    function search_right(){}
 }

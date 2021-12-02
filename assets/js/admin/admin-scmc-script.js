@@ -66,7 +66,7 @@ $(function () {
                     'data'   : id,
                     'table'  : 'products',
                 };
-                $.post(ajax+url_type, data, function() {}, 'json').done(function(response) {
+                $.post(ajax+urlType, data, function() {}, 'json').done(function(response) {
                     show_message(response.message, response.status);
                     if(response.status === 'success') {
                         if (typeof response.data != 'undefined') {

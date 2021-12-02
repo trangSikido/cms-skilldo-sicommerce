@@ -5,5 +5,5 @@
 
 	$title 	= $val->title;
 
-	printf('<h3 style="%s"><a href="%s" title="%s" style="%s">%s</a></h3>', $style, $url, $title, $style, $title );
+	printf('<p class="heading" style="%s"><a href="%s" title="%s" style="%s">%s</a></p>', $style, $url, $title, $style, $title );
 ?>

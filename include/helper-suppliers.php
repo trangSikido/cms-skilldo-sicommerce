@@ -194,8 +194,7 @@ Class Suppliers {
             if($model->update_where(['slug' => $slug], $router) == 0 ) {
                 $router['slug']         = $slug;
                 $router['directional']  = 'suppliers';
-                $router['controller']   = 'frontend_home/home/page/';
-                $router['callback']     = 'suppliers_frontend';
+                $router['controller']   = 'frontend_products/products/index/';
                 $model->add($router);
             }
             if(have_posts($language)) {
@@ -224,14 +223,14 @@ Class Suppliers {
             $model->settable('routes');
             $router['slug']         = $slug;
             $router['directional']  = 'suppliers';
-            $router['controller']   = 'frontend_home/home/page/';
-            $router['callback']     = 'suppliers_frontend';
+            $router['controller']   = 'frontend_products/products/index/';
             $router['object_id']    = $suppliers_id;
+            $router['object_type']  = 'suppliers';
             $model->add($router);
             /*=============================================================
             LANGUAGE
             =============================================================*/
-            if( have_posts($language) ) {
+            if(have_posts($language)) {
                 $model->settable('language');
                 foreach ($language as $key => $val) {
                     $lang['name']          = Str::clear($val['name']);
@@ -276,6 +275,7 @@ Class Suppliers {
                 Metadata::deleteByMid('suppliers', $suppliersID);
                 //delete menu
                 $model->settable('menu')->delete_where(['object_id'=> $suppliersID, 'object_type' => 'suppliers']);
+                CacheHandler::delete('menu_item_', true);
                 //xóa liên kết
                 $model->settable('relationships')->delete_where(['object_id'=> $suppliersID, 'object_type' => 'suppliers']);
                 return [$suppliersID];
@@ -313,6 +313,7 @@ Class Suppliers {
 
                 //delete menu
                 $model->settable('menu')->delete_where_in($where_in, ['object_type' => 'suppliers']);
+                CacheHandler::delete('menu_item_', true);
 
                 //xóa liên kết
                 $model->settable('relationships')->delete_where_in($where_in, ['object_type' => 'suppliers']);

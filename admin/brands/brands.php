@@ -8,9 +8,7 @@ include_once 'table.php';
 
 Class Brands_Admin {
 
-    function __construct() {
-        add_filter('delete_object_brands', [$this, 'delete'], 1, 3 );
-    }
+    function __construct() {}
 
     public static function page() {
 
@@ -79,15 +77,5 @@ Class Brands_Admin {
                 include SCMC_PATH.'admin/views/brands/html-brands-save.php';
             }
         }
-    }
-
-    public static function delete($res, $table, $id) {
-        if(is_numeric($id)) {
-            $res = Brands::delete($id);
-        }
-        else if(have_posts($id)) {
-            $res = Brands::deleteList($id);
-        }
-        return $res;
     }
 }

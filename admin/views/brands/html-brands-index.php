@@ -6,21 +6,18 @@
                 <?php do_action('admin_brands_action_bar_heading');?>
             </div>
         </div>
-        <div class="box">
+        <div class="box" style="overflow:inherit;">
+            <div class="box-heading"><?php $table_list->display_search();?></div>
             <!-- .box-content -->
             <div class="box-content">
-                <!-- search box -->
-                <!-- /search box -->
-                <form method="post" id="form-action" class="table-responsive">
-                    <?php $table_list->display();?>
-                </form>
-                <!-- paging -->
-                <div class="paging">
-                    <div class="pull-right"><?= (isset($pagination))?$pagination->html():'';?></div>
-                </div>
-                <!-- paging -->
+                <form method="post" id="form-action"><?php $table_list->display();?></form>
             </div>
             <!-- /.box-content -->
         </div>
+        <!-- paging -->
+        <div class="paging">
+            <div class="pull-right"><?= (isset($pagination))?$pagination->html():'';?></div>
+        </div>
+        <!-- paging -->
     </div>
 </div>

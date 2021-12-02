@@ -81,7 +81,7 @@ if(!function_exists('product_detail_item')) {
         $product_item  = option::get('product_item', array(
             'enable'    => 0,
             'title'     => '',
-            'item'      => array()
+            'item'      => []
         ));
         if(empty($product_item['enable'])) return;
         if(Language::hasMulti() && Language::default() != Language::current()) {
@@ -256,7 +256,7 @@ if(!function_exists( 'product_page_detail_related')) {
 
         if(have_posts($product_related)) {
             $args['products']   = $products;
-            $args['heading']    = __('Sản Phẩm Liên Quan', 'product_heading_related');
+            $args['heading']    = apply_filters('product_detail_heading_related', __('Sản Phẩm Liên Quan', 'product_heading_related'));
             $args['id']         = 'related';
             scmc_template('detail/widget_product_content', $args);
         }
@@ -305,7 +305,7 @@ if(!function_exists('product_page_detail_viewed_sidebar')) {
 
                 if(have_posts($products)) {
                     $args['products']   = $products;
-                    $args['heading']    = __('Sản Phẩm Đã Xem', 'product_heading_watched');
+                    $args['heading']    = apply_filters('product_detail_heading_watched', __('Sản Phẩm Đã Xem', 'product_heading_watched'));
                     $args['id']         = 'watched';
                     if($args['position'] == 'sidebar') scmc_template('sidebar/widget_product', $args);
                     if($args['position'] == 'content' || $args['position'] == 'bottom') scmc_template('detail/widget_product_content', $args);

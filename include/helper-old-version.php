@@ -233,7 +233,7 @@ if(!function_exists('get_suppliers_by')) {
 }
 
 if(!function_exists('gets_suppliers')) {
-    function gets_suppliers( $args = array()) {
+    function gets_suppliers( $args = []) {
         return Suppliers::gets($args);
     }
 }
@@ -263,7 +263,7 @@ if( !function_exists('delete_suppliers') ) {
 }
 
 if( !function_exists('delete_list_suppliers') ) {
-    function delete_list_suppliers( $suppliersID = array(), $trash = false ) {
+    function delete_list_suppliers( $suppliersID = [], $trash = false ) {
         return Suppliers::deleteList($suppliersID, $trash);
     }
 }

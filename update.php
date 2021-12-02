@@ -18,7 +18,7 @@ add_action('admin_init', 'Product_update_core');
 
 Class Product_Update_Version {
     public function runUpdate($cartVersion) {
-        $listVersion    = ['1.9.0', '2.0.0', '2.0.1', '2.0.4', '2.0.5', '2.1.0', '2.2.0', '3.0.0', '3.2.0', '3.3.0'];
+        $listVersion    = ['1.9.0', '2.0.0', '2.0.1', '2.0.4', '2.0.5', '2.1.0', '2.2.0', '3.0.0', '3.2.0', '3.3.0', '3.5.0'];
         $model          = get_model();
         foreach ($listVersion as $version ) {
             if(version_compare( $version, $cartVersion ) == 1) {
@@ -60,6 +60,10 @@ Class Product_Update_Version {
     }
     public function update_Version_3_3_0($model) {
         Product_Update_Files::Version_3_3_0($model);
+    }
+    public function update_Version_3_5_0($model) {
+        Product_Update_Database::Version_3_5_0($model);
+        Product_Update_Files::Version_3_5_0($model);
     }
 }
 Class Product_Update_Database {
@@ -154,6 +158,31 @@ Class Product_Update_Database {
             $valueNew = Option::get($optionNew);
             if(empty($valueNew)) Option::update($optionNew, $value);
             Option::delete($optionOld);
+        }
+    }
+    public static function Version_3_5_0($model) {
+        $brands = Brands::gets();
+        $suppliers = Suppliers::gets();
+        $model->settable('routes');
+        foreach ($brands as $brand) {
+            $router = $model->get_where(['slug' => $brand->slug, 'object_id' => $brand->id]);
+            if(have_posts($router)) {
+                $model->update_where([
+                    'controller'    => 'frontend_products/products/index/',
+                    'callback'      => '',
+                    'object_type'   => 'brands',
+                ],['id' => $router->id]);
+            }
+        }
+        foreach ($suppliers as $supplier) {
+            $router = $model->get_where(['slug' => $supplier->slug, 'object_id' => $supplier->id]);
+            if(have_posts($router)) {
+                $model->update_where([
+                    'controller'    => 'frontend_products/products/index/',
+                    'callback'      => '',
+                    'object_type'   => 'suppliers',
+                ],['id' => $router->id]);
+            }
         }
     }
 }
@@ -253,6 +282,18 @@ Class Product_Update_Files {
             'admin/brands.php',
             'admin/suppliers.php',
             'admin/related.php',
+        ];
+        foreach ($Files as $file) {
+            if(file_exists($path.$file)) {
+                unlink($path.$file);
+            }
+        }
+    }
+    public static function Version_3_5_0($model) {
+        $path = FCPATH.VIEWPATH.'plugins/'.CART_NAME;
+        $Files = [
+            'admin/products/delete.php',
+            'admin/categories/delete.php',
         ];
         foreach ($Files as $file) {
             if(file_exists($path.$file)) {

@@ -43,20 +43,23 @@ class skd_product_category_list_table extends skd_object_list_table {
     }
 
     function _column_action($item, $column_name, $module, $table, $class) {
-        $url    = Url::adminModule();
-        $cate   = (!empty(Admin::getCateType())) ? '?cate_type='.Admin::getCateType() : '';
-        $class .= ' text-center';
-        echo '<td class="'.$class.'">';
-        if(Auth::hasCap('product_cate_delete')) {
-            echo '<button class="btn-red btn delete" data-id="'.$item->id.'" data-table="'.$table.'">'.Admin::icon('delete').'</button>';
-        }
-        if(Auth::hasCap('product_cate_edit')) {
-            echo '<a href="'.$url.'edit/'.$item->slug.$cate.'" class="btn-blue btn">'.Admin::icon('edit').'</a>';
-        }
+        $url    = Url::adminModule().'edit/'.$item->slug.((!empty(Admin::getCateType())) ? '?cate_type='.Admin::getCateType() : '');
+        echo '<td class="'.$class.' text-center">';
+        if(Auth::hasCap('product_cate_delete')) echo '<button class="btn btn-red js_btn_confirm" data-trash="disable" data-action="delete" data-ajax="Cms_Ajax_Action::delete" data-id="'.$item->id.'" data-module="ProductCategory" data-heading="Xóa Dữ liệu" data-description="Bạn chắc chắn muốn xóa sản phẩm <b>'.html_escape($item->name).'</b> ?">'.Admin::icon('delete').'</button>';
+        if(Auth::hasCap('product_cate_edit')) echo '<a href="'.$url.'" class="btn-blue btn">'.Admin::icon('edit').'</a>';
         echo "</td>";
     }
 
-    function search_left() {}
+    function search_left() {
+        if(Auth::hasCap('product_cate_delete')) {
+            ?>
+            <button class="btn btn-red js_btn_confirm" style="display: none;" data-action="delete"
+                    data-ajax="Cms_Ajax_Action::delete" data-trash="disable" data-module="ProductCategory"
+                    data-heading="Xóa Dữ liệu" data-description="Bạn chắc chắn muốn xóa trường dữ liệu này?"
+                    data-toggle="tooltip" data-placement="top"
+                    title="Xóa"><?php echo Admin::icon('delete'); ?></button><?php
+        }
+    }
 
     function search_right() {
         $url     = Url::adminModule();

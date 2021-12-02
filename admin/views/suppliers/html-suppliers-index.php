@@ -10,21 +10,18 @@
         <div class="box">
             <!-- .box-content -->
             <div class="box-content">
-                <!-- search box -->
-                <?php //$table_list->display_search();?>
-                <!-- /search box -->
+                <div class="box-heading"><?php $table_list->display_search();?></div>
 
                 <form method="post" id="form-action" class="table-responsive">
                     <?php $table_list->display();?>
                 </form>
-
-                <!-- paging -->
-                <div class="paging">
-                    <div class="pull-right"><?= (isset($pagination))?$pagination->html():'';?></div>
-                </div>
-                <!-- paging -->
             </div>
             <!-- /.box-content -->
         </div>
+        <!-- paging -->
+        <div class="paging">
+            <div class="pull-right"><?= (isset($pagination))?$pagination->html():'';?></div>
+        </div>
+        <!-- paging -->
     </div>
 </div>

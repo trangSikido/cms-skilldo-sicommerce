@@ -18,14 +18,11 @@ Class Product_Admin_Action_Bar {
 
         if(Template::isPage('products_index')) {
             if(InputBuilder::get('status') == 'trash' ) {
-                echo $btn['undo'];
-                if( Auth::hasCap('product_delete') ) { echo $btn['del']; }
                 echo '<a href="'.$urlBack.'" class="btn-icon btn-blue">'.Admin::icon('back').' Quay lại</a>';
-                if( Auth::hasCap('product_edit') ) { echo $btn['add']; }
+                if(Auth::hasCap('product_edit')) { echo $btn['add']; }
             }
             else {
-                if( Auth::hasCap('product_delete') ) { echo $btn['trash']; }
-                if( Auth::hasCap('product_edit') ) { echo $btn['add']; }
+                if(Auth::hasCap('product_edit')) { echo $btn['add']; }
             }
         }
 
@@ -36,7 +33,7 @@ Class Product_Admin_Action_Bar {
 
         if(Template::isPage('products_edit')) {
             echo $btn['save'];
-            if( Auth::hasCap('product_edit') ) { echo $btn['add']; }
+            if(Auth::hasCap('product_edit')) { echo $btn['add']; }
             echo '<a href="'.$urlBack.'" class="btn-icon btn-blue">'.Admin::icon('back').' Quay lại</a>';
         }
     }

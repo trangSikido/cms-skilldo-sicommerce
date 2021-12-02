@@ -178,9 +178,7 @@ Class Brands {
 
                 $router['directional']  = 'brands';
 
-                $router['controller']   = 'frontend_home/home/page/';
-
-                $router['callback']     = 'brands_frontend';
+                $router['controller']   = 'frontend_products/products/index/';
 
                 $model->settable('routes')->add($router);
             }
@@ -224,11 +222,11 @@ Class Brands {
 
             $router['directional']  = 'brands';
 
-            $router['controller']   = 'frontend_home/home/page/';
-
-            $router['callback']     = 'brands_frontend';
+            $router['controller']   = 'frontend_products/products/index/';
 
             $router['object_id']    = $brands_id;
+
+            $router['object_type']  = 'brands';
 
             $model->settable('routes')->add($router);
 
@@ -286,8 +284,11 @@ Class Brands {
                 //delete gallerys
                 Gallery::deleteItemByObject($brandsID, 'brands');
                 Metadata::deleteByMid('brands', $brandsID);
+
                 //delete menu
                 $model->settable('menu')->delete_where(['object_id'=> $brandsID, 'object_type' => 'brands']);
+                CacheHandler::delete('menu_item_', true);
+
                 //xóa liên kết
                 $model->settable('relationships')->delete_where(['object_id'=> $brandsID, 'object_type' => 'brands']);
 
@@ -326,6 +327,7 @@ Class Brands {
 
                 //delete menu
                 $model->settable('menu')->delete_where_in($where_in, ['object_type' => 'brands']);
+                CacheHandler::delete('menu_item_', true);
 
                 //xóa liên kết
                 $model->settable('relationships')->delete_where_in($where_in, ['object_type' => 'brands']);

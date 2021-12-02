@@ -87,7 +87,7 @@ Class Product_Variable_Popover {
                         foreach ($variables as $variable) {
                             $attr_name = '';
                             foreach ($variable->items as $attr_id) {
-                                $attr = Attribute::getItem($attr_id);
+                                $attr = Attributes::getItem($attr_id);
                                 if( have_posts($attr)) {
                                     $attr_name .= ' - <span style="font-weight: bold">'.$attr->title.'</span>';
                                 }
@@ -143,7 +143,7 @@ Class Product_Variable_Popover {
                     $attr_name = '';
                     if(!empty($value->items)) {
                         foreach ($value->items as $attr_id) {
-                            $attr = Attribute::getItem($attr_id);
+                            $attr = Attributes::getItem($attr_id);
                             if( have_posts($attr)) {
                                 $attr_name .= ' - <span style="font-weight: bold">'.$attr->title.'</span>';
                             }
@@ -216,7 +216,7 @@ Class Product_Admin_Popover {
                         $parent  = Product::get($product->parent_id);
                         $attr_name = '';
                         foreach ($product->items as $attr_id) {
-                            $attr = Attribute::getItem($attr_id);
+                            $attr = Attributes::getItem($attr_id);
                             if( have_posts($attr)) {
                                 $attr_name .= $attr->title .' / ';
                             }
@@ -239,7 +239,7 @@ Class Product_Admin_Popover {
                         $parent  = Product::get($product->parent_id);
                         $attr_name = '';
                         foreach ($product->items as $attr_id) {
-                            $attr = Attribute::getItem($attr_id);
+                            $attr = Attributes::getItem($attr_id);
                             if( have_posts($attr)) {
                                 $attr_name .= $attr->title .' / ';
                             }
@@ -315,7 +315,7 @@ Class Product_Variable_Admin_Popover {
 
         $products_variations = Variation::gets(['product' => $item->id]);
 
-        $object = array();
+        $object = [];
 
         if( have_posts($products_variations) ) {
 
@@ -332,7 +332,7 @@ Class Product_Variable_Admin_Popover {
 
                 foreach ($variation->items as $attr_id) {
 
-                    $attr = Attribute::getItem($attr_id);
+                    $attr = Attributes::getItem($attr_id);
 
                     if( have_posts($attr)) {
                         $attr_name .= $attr->title .' / ';
