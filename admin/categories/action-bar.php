@@ -10,7 +10,6 @@ Class Product_Category_Admin_Action_Bar {
     static public function buttonRight($module) {
         $btn = action_bar_button( $module );
         if(Template::isPage('products_categories_index')) {
-            if( Auth::hasCap('product_cate_delete') ) { echo $btn['del']; }
             if( Auth::hasCap('product_cate_edit') ) {
                 echo '<a href="'.Url::admin('products/products_categories/add').'" class="btn-icon btn-green">'.Admin::icon('add').' Thêm Mới (F3)</a>';
                 echo '<button class="btn-icon btn-green js_products_category_quick_btn">'.Admin::icon('add').'Thêm nhanh (CTRL + F3)</button>';

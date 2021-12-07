@@ -275,7 +275,7 @@ Class Suppliers {
                 Metadata::deleteByMid('suppliers', $suppliersID);
                 //delete menu
                 $model->settable('menu')->delete_where(['object_id'=> $suppliersID, 'object_type' => 'suppliers']);
-                CacheHandler::delete('menu_item_', true);
+                CacheHandler::delete('menu_items_', true);
                 //xóa liên kết
                 $model->settable('relationships')->delete_where(['object_id'=> $suppliersID, 'object_type' => 'suppliers']);
                 return [$suppliersID];
@@ -313,7 +313,7 @@ Class Suppliers {
 
                 //delete menu
                 $model->settable('menu')->delete_where_in($where_in, ['object_type' => 'suppliers']);
-                CacheHandler::delete('menu_item_', true);
+                CacheHandler::delete('menu_items_', true);
 
                 //xóa liên kết
                 $model->settable('relationships')->delete_where_in($where_in, ['object_type' => 'suppliers']);

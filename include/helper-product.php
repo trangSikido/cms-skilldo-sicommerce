@@ -449,7 +449,7 @@ Class ProductCategory {
                     $model->settable('menu');
                     $model->delete_where_in(['field' => 'object_id', 'data' => $listID], ['object_type' => 'products_categories']);
 
-                    CacheHandler::delete('menu_item_', true);
+                    CacheHandler::delete('menu_items_', true);
 
                     CacheHandler::delete('products_categories_', true);
 

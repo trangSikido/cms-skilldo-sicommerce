@@ -287,7 +287,7 @@ Class Brands {
 
                 //delete menu
                 $model->settable('menu')->delete_where(['object_id'=> $brandsID, 'object_type' => 'brands']);
-                CacheHandler::delete('menu_item_', true);
+                CacheHandler::delete('menu_items_', true);
 
                 //xóa liên kết
                 $model->settable('relationships')->delete_where(['object_id'=> $brandsID, 'object_type' => 'brands']);
@@ -327,7 +327,7 @@ Class Brands {
 
                 //delete menu
                 $model->settable('menu')->delete_where_in($where_in, ['object_type' => 'brands']);
-                CacheHandler::delete('menu_item_', true);
+                CacheHandler::delete('menu_items_', true);
 
                 //xóa liên kết
                 $model->settable('relationships')->delete_where_in($where_in, ['object_type' => 'brands']);
