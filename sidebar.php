@@ -11,7 +11,7 @@ Class ProductSidebar {
 
         $categories = ProductCategory::Gets(['mutilevel' => 0, 'params' => array('select' => 'id, name, slug, level')]);
 
-        scmc_template('sidebar/widget_category', ['heading' => $heading, 'categories' => $categories]);
+        scmc_template('sidebar/widget_category', ['heading' => apply_filters('product_sidebar_category_heading', $heading), 'categories' => $categories]);
     }
 
     static public function selling() {
@@ -31,7 +31,7 @@ Class ProductSidebar {
 
         $products = Product::gets($args);
 
-        scmc_template('sidebar/widget_product', ['heading' => $heading, 'products' => $products]);
+        scmc_template('sidebar/widget_product', ['heading' => apply_filters('product_sidebar_selling', $heading), 'products' => $products]);
     }
 
     static public function hot() {
@@ -40,7 +40,7 @@ Class ProductSidebar {
             $heading = sicommerce::config('product_sidebar.hot.title_'.Language::current());
         }
         $args = [
-            'where' => ['status1' => 1],
+            'where' => ['status3' => 1],
             'params' => ['limit' => 5]
         ];
 
@@ -48,7 +48,7 @@ Class ProductSidebar {
 
         $products = Product::gets($args);
 
-        scmc_template('sidebar/widget_product', ['heading' => $heading, 'products' => $products]);
+        scmc_template('sidebar/widget_product', ['heading' => apply_filters('product_sidebar_hot', $heading), 'products' => $products]);
     }
 
     static public function sale() {
@@ -65,7 +65,7 @@ Class ProductSidebar {
 
         $products = Product::gets($args);
 
-        scmc_template('sidebar/widget_product', ['heading' => $heading, 'products' => $products]);
+        scmc_template('sidebar/widget_product', ['heading' => apply_filters('product_sidebar_sale', $heading), 'products' => $products]);
     }
 }
 if(Template::isPage('products_index')) {
