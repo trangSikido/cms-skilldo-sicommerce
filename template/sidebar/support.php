@@ -9,5 +9,5 @@
     </div>
     <div class="or"><span><?php echo __('HOẶC', 'product_support_or');?></span></div>
     <h3 class="supportTitle" style="margin: 15px 0 10px 0;"><?php echo __('hỗ trợ trực tuyến', 'product_support_title');?></h3>
-    <a class="chatNow sprite-icon_chat" href="/lien-he" title="Chat với chúng tôi"><?php echo __('Liên hệ với chúng tôi', 'product_support_button');?></a>
+    <a class="chatNow sprite-icon_chat" href="<?php echo $url;?>" title="Chat với chúng tôi"><?php echo __('Liên hệ với chúng tôi', 'product_support_button');?></a>
 </div>
