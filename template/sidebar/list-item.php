@@ -1,5 +1,5 @@
 <div class="widget products-detail-box policy_intuitive">
-    <div class="sidebar-title"><h4 class="header"><?php echo $title;?></h4></div>
+    <div class="sidebar-title"><?php echo ThemeSidebar::heading($title);?></div>
     <div class="list-item">
         <?php foreach ($items as $item) { ?>
         <div class="pr-item">

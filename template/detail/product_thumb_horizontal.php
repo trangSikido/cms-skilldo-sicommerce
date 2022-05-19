@@ -19,6 +19,7 @@
                         <?php Template::img($object->image, '', ['type' => $image_type_medium]);?>
                     </a>
                 </li>
+                <?php if(have_posts($gallerys)) {?>
                 <?php foreach ($gallerys as $key => $image): ?>
                     <?php if($image->type == 'youtube') {?>
                         <li class="product-thumb">
@@ -35,6 +36,7 @@
                         </li>
                     <?php } ?>
                 <?php endforeach ?>
+                <?php } ?>
             </ul>
         </div>
     </div>

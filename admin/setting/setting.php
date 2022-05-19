@@ -1,9 +1,11 @@
 <?php
 include_once 'ajax.php';
+include_once 'setting-object.php';
 include_once 'setting-index.php';
 include_once 'setting-detail.php';
 Class Admin_Product_Setting {
     function __construct() {
+        new Product_Admin_Setting_Object();
         new Product_Admin_Setting_Index();
         new Product_Admin_Setting_Detail();
     }

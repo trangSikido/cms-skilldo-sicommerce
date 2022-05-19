@@ -1,55 +1,55 @@
 <div class="hidden">
     <input type="text" id="slug" value="<?php echo (empty($slug)) ? URL_PRODUCT: $slug;?>">
+    <input type="text" name="orderby" id="sort" value="<?php echo (empty($_GET['orderby'])) ? 'new': InputBuilder::Get('orderby');?>">
     <?php if(Language::hasMulti()) {?>
-    <input type="text" id="language" value="<?php echo Language::current();?>">
+        <input type="text" id="language" value="<?php echo Language::current();?>">
     <?php } ?>
     <?php do_action('page_products_index_form_hidden');?>
 </div>
 <div class="product-sort-bar">
-    <div class="product-sort-left js_product_pagination">
-        <?php if(isset($pagination) && is_object($pagination) && method_exists( $pagination, 'html' ) ) echo $pagination->html();?>
-    </div>
-    <div class="product-sort-right">
-        <label for="">Sắp xếp</label>
-        <select name="orderby" id="orderby" class="form-control">
-            <option value="">Mới nhất</option>
-            <option value="price-asc" <?php echo (InputBuilder::get('orderby') == 'price-asc' ) ? 'selected' : '';?>>Giá từ thấp đến cao</option>
-            <option value="price-desc" <?php echo (InputBuilder::get('orderby') == 'price-desc' ) ? 'selected' : '';?>>Giá từ cao đến thắp</option>
-            <option value="best-selling" <?php echo (InputBuilder::get('orderby') == 'best-selling' ) ? 'selected' : '';?>>Bán chạy</option>
-        </select>
+    <div class="product-sort-box">
+        <label for=""><?php echo __('Sắp xếp theo','product_index_sort');?></label>
+        <div class="product-sort-element">
+            <a class="btn js_product_sort_btn <?php echo (empty(InputBuilder::Get('orderby')) || InputBuilder::Get('orderby') == 'new') ? 'active': '';?>" data-sort="new">Mới nhất</a>
+            <a class="btn js_product_sort_btn <?php echo (InputBuilder::Get('orderby') == 'hot') ? 'active': '';?>" data-sort="hot">Nổi bật</a>
+            <a class="btn js_product_sort_btn <?php echo (InputBuilder::Get('orderby') == 'best-selling') ? 'active': '';?>" data-sort="best-selling">Bán chạy</a>
+            <a class="btn js_product_sort_btn <?php echo (InputBuilder::Get('orderby') == 'price-asc') ? 'active': '';?>" data-sort="price-asc">Giá thấp</a>
+            <a class="btn js_product_sort_btn <?php echo (InputBuilder::Get('orderby') == 'price-desc') ? 'active': '';?>" data-sort="price-desc">Giá cao</a>
+        </div>
     </div>
 </div>
 <div class="clearfix"></div>
 <style>
     .product-sort-bar {
         position: relative;
-        overflow: hidden; padding: 15px 0;
+        overflow: hidden; padding: 0 0 15px 0;
     }
-    .product-sort-bar .product-sort-right {
-        float:right; width: 50%; text-align: right;
+    .product-sort-bar .product-sort-box {
+        text-align: right; display: flex; align-items: center; gap:10px; border-bottom: 1px solid #f4f4f4;
     }
-    .product-sort-bar .product-sort-right .form-control label{
-        display: inline-block;
+    .product-sort-bar .product-sort-box .product-sort-element {
+        display: flex;
     }
-    .product-sort-bar .product-sort-right .form-control {
-        display: inline-block; width: 200px;
-        border-radius: 5px;
-        height: 40px;
-        box-shadow: none;
-        border: 0;
+    .product-sort-bar .product-sort-box .product-sort-element .btn {
+        display: block;
+        padding:10px 15px;
+        border-radius: 0!important;
+        border: none;
+        border-bottom: 3px solid transparent;
+        margin: 0 10px -1px;
+        font-weight: 500;
     }
-    .product-sort-bar .product-sort-left {
-        float:left; width: 50%; text-align: left;
+    .product-sort-bar .product-sort-box .product-sort-element .btn:hover,  .product-sort-bar .product-sort-box .product-sort-element .btn.active {
+        color: var(--theme-color);
+        border-bottom: 3px solid var(--theme-color) !important;
     }
-    .product-sort-bar .product-sort-left .pagination {
-        margin: 0;
-    }
-    @media(max-width: 768px) {
-        .product-sort-bar .product-sort-right {
-            float:right; width: 100%; text-align: right;
+    @media(max-width: 600px) {
+        .product-sort-bar .product-sort-box label {
+            display: none;
         }
-        .product-sort-bar .product-sort-left {
-            float:left; width: 100%; text-align: left; display: none;
+        .product-sort-bar .product-sort-box .product-sort-element .btn {
+            padding:5px 5px; margin:0 5px -1px;
+            font-size: 13px; font-weight: 400;
         }
     }
 </style>
@@ -64,7 +64,11 @@
             return false;
         });
 
-        $(document).on('change', '#js_product_index_form__load #orderby', function () {
+        $(document).on('click touch', '#js_product_index_form__load .js_product_sort_btn', function () {
+            let orderby = $(this).data('sort');
+            $('#sort').val(orderby);
+            $('#js_product_index_form__load .js_product_sort_btn').removeClass('active');
+            $(this).addClass('active');
             $('#js_product_index_form__load').trigger('submit');
             return false;
         });

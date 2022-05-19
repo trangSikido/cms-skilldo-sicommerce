@@ -112,7 +112,12 @@ if(!function_exists('product_detail_support')) {
 /** product tabs **/
 if(!function_exists('product_detail_display_tabs')) {
 	function product_detail_display_tabs($object) {
-        scmc_template('detail/tabs');
+        if(version_compare(get_instance()->data['template']->version, '3.0.0') < 0) {
+            scmc_template('detail/tabs-v3');
+        }
+        else {
+            scmc_template('detail/tabs');
+        }
 	}
 	add_action('product_detail_tabs', 'product_detail_display_tabs', 10);
 }

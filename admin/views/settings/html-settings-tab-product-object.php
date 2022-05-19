@@ -1,89 +1,90 @@
-<?php
-$product_hiden_title      	= option::get('product_hiden_title');
-$product_hiden_price      	= option::get('product_hiden_price');
-$product_hiden_description  = option::get('product_hiden_description');
-$product_title_color       = option::get('product_title_color');
-$product_price_color       = option::get('product_price_color');
-?>
-<div class="box">
-	<div class="header"> <h2>Box Sản Phẩm</h2> </div>
-	<div class="box-content">
-		<div class="col-md-12">
-			<div class="row">
-				<div class="col-md-3">
-					<label for="">Tên sản phẩm</label>
-					<p style="color:#999;margin:5px 0 5px 0;">Cấu hình tên hiển thị sản phẩm</p>
-				</div>
-				<div class="col-md-9">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <?php  $input = array('field' => 'product_hiden_title', 'type'	=> 'switch', 'label' => 'Ẩn / Hiện'); echo _form($input, $product_hiden_title);?>
-                        </div>
-                        <div class="col-md-9">
-                            <?php  $input = array('field' => 'product_title_color', 'type'	=> 'color', 'label' => 'Màu Tên',); ?>
-                            <?php echo _form($input, $product_title_color);?>
-                        </div>
-                    </div>
-				</div>
-			</div>
-			<hr/>
-
-			<div class="row">
-				<div class="col-md-3">
-					<label for="">Giá sản phẩm</label>
-					<p style="color:#999;margin:5px 0 5px 0;">Cấu hình hiển thị giá sản phẩm</p>
-				</div>
-				<div class="col-md-9">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <?php  $input = array('field' => 'product_hiden_price', 'type'	=> 'switch', 'label' => 'Ẩn / Hiện'); ?>
-                            <?php echo _form($input, $product_hiden_price);?>
-                        </div>
-                        <div class="col-md-9">
-                            <?php  $input = array('field' => 'product_price_color', 'type'	=> 'color', 'label' => 'Màu Giá',); ?>
-                            <?php echo _form($input, $product_price_color);?>
-                        </div>
-                    </div>
-				</div>
-			</div>
-			<hr/>
-
-			<div class="row">
-				<div class="col-md-3">
-					<label for="">Mô tả sản phẩm</label>
-					<p style="color:#999;margin:5px 0 5px 0;">Cấu hình tên hiển thị sản phẩm</p>
-				</div>
-				<div class="col-md-9">
-					<?php  $input = array('field' => 'product_hiden_description', 'type'	=> 'switch', 'label' => 'Ẩn / Hiện'); ?>
-					<?php echo _form($input, $product_hiden_description);?>
-				</div>
-			</div>
-
-		</div>
-	</div>
-</div>
-<style type="text/css">
+<?php do_action('admin_product_setting_object'); ?>
+<style>
 	.product { margin-bottom: 10px; }
 	.product .img img { width: 100%; }
 	.product .title { text-transform: uppercase; font-size: 10px; margin-bottom: 5px; }
 	.product.ih-item.square { width: 100%; height: auto; }
+    .box-ef-option-container {
+        display: flex; gap:10px; flex-wrap: wrap;
+    }
+    .box-ef-option-container .ef-option-item {
+        width: calc(100%/3 - 10px);
+        position: relative;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        -ms-flex-align: center;
+        align-items: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        height: 74px;
+        box-sizing: border-box;
+        color: #bec9d6;
+        transition: color .2s ease;
+        border: 3px solid #fff;
+        border-radius: 3px;
+        cursor: pointer;
+        text-align: center;
+        margin-top: 10px;
+    }
+    .box-ef-option-container .ef-option-item input {
+        display: none;
+    }
+    .ef-option-item-content {
+        position: relative;
+        display: block;
+        -ms-flex: 1 1 auto;
+        flex: 1 1 auto;
+        width: 100%;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-align: center;
+        align-items: center;
+        height: 100%;
+        -ms-flex-pack: center;
+        justify-content: center;
+        background: #f1f5f9;
+    }
+    .ef-option-item-icon {
+        width: 70%;
+        height: 60%;
+        line-height: 40px;
+        font-size: 18px;
+    }
+    .ef-option-item-effect {
+        width: 70%;
+        height: 60%;
+        background: #fff;
+        transition: box-shadow .3s;
+        border-radius: 3px;
+        opacity: 0.5;
+    }
+    .ef-option-item.hover {
+        box-shadow: 0 0 10px 1px #2b87da;
+    }
+    .ef-option-item.hover .ef-option-item-effect {
+        opacity: 1;
+    }
 </style>
 
 <script type="text/javascript">
-$(function() {
+    $(function() {
+        let form = $('#mainform');
 
-	let item = $('.woocommecre-review-object');
+        let productObjectHandler = function() {
+            this.onLoad();
+        };
 
-	let form = $('#mainform');
+        productObjectHandler.prototype.onLoad = function (e) {
+            let data = $( ':input', form).serializeJSON();
+        };
 
-	let productObjectHandler = function() {
-		this.onLoad();
-	};
+        new productObjectHandler();
 
-	productObjectHandler.prototype.onLoad = function (e) {
-		let data = $( ':input', form).serializeJSON();
-	};
-
-	new productObjectHandler();
-})
+        $('.ef-option-item').click(function () {
+            $(this).closest('.box-ef-option-container').find('.ef-option-item').removeClass('hover');
+            $(this).addClass('hover');
+        });
+    })
 </script>

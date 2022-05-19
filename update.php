@@ -18,7 +18,7 @@ add_action('admin_init', 'Product_update_core');
 
 Class Product_Update_Version {
     public function runUpdate($cartVersion) {
-        $listVersion    = ['1.9.0', '2.0.0', '2.0.1', '2.0.4', '2.0.5', '2.1.0', '2.2.0', '3.0.0', '3.2.0', '3.3.0', '3.5.0'];
+        $listVersion    = ['1.9.0', '2.0.0', '2.0.1', '2.0.4', '2.0.5', '2.1.0', '2.2.0', '3.0.0', '3.2.0', '3.3.0', '3.5.0', '3.6.0'];
         $model          = get_model();
         foreach ($listVersion as $version ) {
             if(version_compare( $version, $cartVersion ) == 1) {
@@ -64,6 +64,9 @@ Class Product_Update_Version {
     public function update_Version_3_5_0($model) {
         Product_Update_Database::Version_3_5_0($model);
         Product_Update_Files::Version_3_5_0($model);
+    }
+    public function update_Version_3_6_0($model) {
+        Product_Update_Database::Version_3_6_0($model);
     }
 }
 Class Product_Update_Database {
@@ -184,6 +187,10 @@ Class Product_Update_Database {
                 ],['id' => $router->id]);
             }
         }
+    }
+    public static function Version_3_6_0($model) {
+        $model->query("ALTER TABLE `".CLE_PREFIX."product_metadata` CHANGE `meta_key` `meta_key` VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL;");
+        $model->query("ALTER TABLE `".CLE_PREFIX."product_metadata` ADD INDEX(`object_id`, `meta_key`);");
     }
 }
 Class Product_Update_Role {

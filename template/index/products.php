@@ -16,7 +16,7 @@
 	$col = 'col-xs-'.$col['xs'].' col-sm-'.$col['sm'].' col-md-'.$col['md'].' col-lg-'.$col['lg'].'';
 ?>
 <div class="list-item-product">
-	<div class="row" id="js_product_list__item" style="margin-left: -7.5px; margin-right: 7.5px;">
+	<div class="row" id="js_product_list__item">
 		<?php foreach ($objects as $key => $val): ?>
 			<div class="<?php echo $col;?>">
 			<?php echo scmc_template('loop/item_product', array('val' =>$val));?>

@@ -1,14 +1,13 @@
 <?php
-	$category_row_count        = option::get('category_row_count');
-	$category_row_count_tablet = option::get('category_row_count_tablet');
-	$category_row_count_mobile = option::get('category_row_count_mobile');
+	$category_row_count        = Option::get('category_row_count');
+	$category_row_count_tablet = Option::get('category_row_count_tablet');
+	$category_row_count_mobile = Option::get('category_row_count_mobile');
 
-	$col['lg'] = 12/$category_row_count;
-	$col['md'] = 12/$category_row_count;
-	$col['sm'] = 12/$category_row_count_tablet;
-	$col['xs'] = 12/$category_row_count_mobile;
+	$lg = ($category_row_count == 5) ? 15 : 12/$category_row_count;
+	$sm = ($category_row_count_tablet == 5) ? 15 : 12/$category_row_count_tablet;
+	$xs = ($category_row_count_mobile == 5) ? 15 : 12/$category_row_count_mobile;
 
-	$col = 'col-xs-'.$col['xs'].' col-sm-'.$col['sm'].' col-md-'.$col['md'].' col-lg-'.$col['lg'].'';
+	$col = 'col-'.$xs.' col-xs-'.$xs.' col-sm-'.$sm.' col-md-'.$lg.' col-lg-'.$lg;
 ?>
 
 <div class="product-slider-horizontal" style="margin-top: 10px;">

@@ -8,7 +8,7 @@
 	do_action( 'product_detail_before', $object );
 	?>
 	<div class="row">
-		<div class="col-md-6" id="surround">
+		<div class="col-12 col-xs-12 col-md-6" id="surround">
 			<?php
                 /**
                  * products_detail_slider hook.
@@ -17,7 +17,7 @@
                 do_action('product_detail_slider', $object );
 			?>
 		</div>
-		<div class="col-md-6">
+		<div class="col-12 col-xs-12 col-md-6">
 			<?php
                 /**
                  * products_detail_info hook.
@@ -34,7 +34,7 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-md-9"> 
+		<div class="col-12 col-xs-12 col-md-9">
 			<?php
 			/**
 			 * product_detail_tabs hook.
@@ -43,7 +43,7 @@
 			 */
 			do_action( 'product_detail_tabs', $object );
 			?> </div>
-		<div class="col-md-3 sidebar">
+		<div class="col-12 col-xs-12 col-md-3 sidebar">
 			<?php
 			/**
 			 * product_detail_sidebar hook.

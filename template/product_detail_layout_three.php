@@ -8,7 +8,7 @@
     do_action( 'product_detail_before', $object ); //ver 3.0.0
     ?>
     <div class="row">
-        <div class="col-md-9">
+        <div class="col-12 col-xs-12 col-md-9">
             <div class="row">
                 <div class="col-md-6" id="surround">
                     <?php
@@ -48,7 +48,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-3 sidebar">
+        <div class="col-12 col-xs-12 col-md-3 sidebar">
             <?php
             /**
              * product_detail_support hook.

@@ -1,5 +1,5 @@
 <div class="widget products-detail-box">
-    <div class="sidebar-title"><h4 class="header"><?php echo __('Tin Tức Liên Quan', 'product_heading_new_related');?></h4></div>
+    <div class="sidebar-title"><?php echo ThemeSidebar::heading(__('Tin Tức Liên Quan', 'product_heading_new_related'));?></div>
     <div class="sidebar-content box-content post-slider-vertical">
         <?php foreach ($posts as $key => $val): ?>
             <?php Template::partial('include/loop/item_post_sidebar', ['val' => $val]);?>

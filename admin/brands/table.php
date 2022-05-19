@@ -39,18 +39,12 @@ class skd_brands_list_table extends skd_object_list_table {
     function _column_action($item, $column_name, $module, $table, $class) {
         echo '<td class="'.$class.' text-center">';
         echo '<a href="'.Url::admin('plugins?page=brands&view=edit&id='.$item->id).'" class="btn-blue btn">'.Admin::icon('edit').'</a>';
-        echo '<button class="btn btn-red js_btn_confirm" data-trash="disable" data-action="delete" data-ajax="Cms_Ajax_Action::delete" data-id="'.$item->id.'" data-module="Brands" data-heading="Xóa Dữ liệu" data-description="Bạn chắc chắn muốn xóa thương hiệu <b>'.html_escape($item->name).'</b> ?">'.Admin::icon('delete').'</button>';
+        echo Admin::btnDelete(['trash' => 'enable', 'id' => $item->id, 'module' => 'Brands', 'des' => 'Bạn chắc chắn muốn xóa thương hiệu <b>'.html_escape($item->name).'</b> ?']);
         echo "</td>";
     }
 
     function search_left() {
-        ?>
-        <button class="btn btn-red js_btn_confirm" style="display: none;" data-action="delete"
-                data-ajax="Cms_Ajax_Action::delete" data-trash="disable" data-module="Brands"
-                data-heading="Xóa Dữ liệu" data-description="Bạn chắc chắn muốn xóa trường dữ liệu này?"
-                data-toggle="tooltip" data-placement="top"
-                title="Xóa"><?php echo Admin::icon('delete'); ?></button>
-        <?php
+        echo Admin::btnDelete(['module' => 'Brands', 'style' => 'display: none;']);
     }
 
     function search_right(){}
