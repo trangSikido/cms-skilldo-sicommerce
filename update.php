@@ -347,9 +347,6 @@ function scmc_database_add_table() {
 		`weight` int(11) NOT NULL DEFAULT '0'
 	) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;");
 
-    //$model->query("ALTER TABLE `".CLE_PREFIX."products` ADD PRIMARY KEY (`id`);");
-    //$model->query("ALTER TABLE `".CLE_PREFIX."products` ADD FULLTEXT KEY `title` (`title`);");
-
 	$model->query("CREATE TABLE IF NOT EXISTS `".CLE_PREFIX."products_categories` (
 		`id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	  	`name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -379,11 +376,12 @@ function scmc_database_add_table() {
 	$model->query("CREATE TABLE IF NOT EXISTS `".CLE_PREFIX."product_metadata` (
 		`id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 		`object_id` int(11) DEFAULT NULL,
-		`meta_key` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+		`meta_key` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
 		`meta_value` text COLLATE utf8mb4_unicode_ci,
 		`created` datetime DEFAULT NULL,
 		`updated` datetime DEFAULT NULL,
-		`order` int(11) DEFAULT '0'
+		`order` int(11) DEFAULT '0',
+		KEY `object_id` (`object_id`,`meta_key`)
 	) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;");
 
 	$model->query("CREATE TABLE IF NOT EXISTS `".CLE_PREFIX."suppliers` (
