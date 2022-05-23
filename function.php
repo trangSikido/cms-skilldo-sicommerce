@@ -55,6 +55,7 @@ if(!function_exists('productItemStyle')) {
         #title product
         $title = Option::get('productTitle');
         if(isset($title['show']))   $style['title']['desktop']['show']      = $title['show'];
+        if(isset($title['color']))  $style['title']['desktop']['color']     = $title['color'];
         if(isset($title['align']))  $style['title']['desktop']['align']     = $title['align'];
         if(isset($title['font']))   $style['title']['desktop']['font']      = $title['font'];
         if(isset($title['weight'])) $style['title']['desktop']['weight']    = $title['weight'];
@@ -66,6 +67,7 @@ if(!function_exists('productItemStyle')) {
         #price
         $price = Option::get('productPrice');
         if(isset($price['show']))   $style['price']['desktop']['show']      = $price['show'];
+        if(isset($price['color']))  $style['price']['desktop']['color']     = $price['color'];
         if(isset($price['align']))  $style['price']['desktop']['align']     = $price['align'];
         if(isset($price['font']))   $style['price']['desktop']['font']      = $price['font'];
         if(isset($price['weight'])) $style['price']['desktop']['weight']    = $price['weight'];
