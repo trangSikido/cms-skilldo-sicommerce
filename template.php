@@ -47,7 +47,7 @@ if (!function_exists('productAssetsValidate')) {
                 --prItem-title-font:<?php echo $title['desktop']['font'];?>;
                 --prItem-title-weight:<?php echo $title['desktop']['weight'];?>;
                 --prItem-title-size:<?php echo $title['desktop']['size'];?>px;
-                --prItem-title-color:<?php echo $title['desktop']['color'];?>px;
+                --prItem-title-color:<?php echo $title['desktop']['color'];?>;
 
                 --prItem-price-display:<?php echo $price['desktop']['show'];?>;
                 --prItem-price-align:<?php echo $price['desktop']['align'];?>;
