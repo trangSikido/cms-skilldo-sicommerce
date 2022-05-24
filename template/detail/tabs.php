@@ -6,7 +6,7 @@
 $tabs = apply_filters( 'product_tabs', []);
 if(have_posts($tabs)): ?>
 <div class="tab-box">
-    <?php if(count($tabs) > 1) {?>
+    <?php if(count($tabs) >= 1) {?>
 	<!-- Nav tabs -->
 	<ul class="nav nav-tabs nav-pills" id="pills-tab" role="tablist">
 		<?php foreach ( $tabs as $key => $tab ) : ?>
